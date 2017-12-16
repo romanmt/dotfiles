@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: fa
-# key: fa
-# binding: C-qa
-# --
-var ${1:name} = function ($2) {
-    $0
-}

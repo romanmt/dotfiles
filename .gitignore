@@ -1,6 +1,10 @@
 
 /emacs.d/ac*
-/emacs.d/.org*
+/emacs.d/.*
+/emacs.d/*.eld
+/emacs.d/*.data
+/emacs.d/*.last
+/emacs.d/elpa/*
 /vim/plugged/*
 
 # Numerous always-ignore extensions

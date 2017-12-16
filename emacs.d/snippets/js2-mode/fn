@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: fn
-# key: fn
-# binding: C-qn
-# --
-function ${1:name}($2) {
-  $0
-}

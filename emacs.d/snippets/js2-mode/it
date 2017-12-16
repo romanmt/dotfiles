@@ -1,8 +1,0 @@
-# -*- mode: snippet -*-
-# name: it
-# key: it
-# binding: C-q TAB
-# --
-it("$1", function(){
-  $0
-})
