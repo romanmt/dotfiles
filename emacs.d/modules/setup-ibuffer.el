@@ -4,9 +4,11 @@
 
 (setq ibuffer-saved-filter-groups
       '(("home"
+         ("rb" (mode . ruby-mode))
          ("js" (mode . js2-mode))
          ("web" (or (mode . jade-mode)
-                    (mode . sws-mode)))
+                    (mode . sws-mode)
+                    (mode . haml-mode)))
          ("clj" (mode . clojure-mode))
          ("org" (or (mode . org-mode)
                     (filename . "OrgMode")))

@@ -28,6 +28,7 @@
 (global-set-key (kbd "C-c i") 'change-inner)
 (global-set-key (kbd "C-c C-i") 'change-outer)
 (global-set-key (kbd "C-c ;") 'comment-or-uncomment-region)
+(global-set-key (kbd "C-c C-m") 'mc/edit-lines)
 
 (global-set-key (kbd "C-c [") (make-repeatable-command 'er/expand-region))
 (global-set-key (kbd "C-c ]") (make-repeatable-command 'er/contract-region))

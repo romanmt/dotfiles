@@ -142,10 +142,10 @@ if has("win16") || has("win32")
 else
     set wildignore+=.git\*,.hg\*,.svn\*
 endif
-set wildignore+=**/node_modules/*,**/bower_components/*
-set wildignore+=*.log,*.sock,**/lib-conv/**,**/target/*
+set wildignore+=**/node_modules/*,*.log,*.sock,**/lib-cov/**
 set wildignore+=*.png,*.gif,*.jpg,*.jpeg,*.class,nohup.out,*.swp
-set wildignore+=*.tmproj,*.pid,**/tmp/*,**/cookbooks/*
+set wildignore+=*.tmproj,*.pid,**/tmp/*,**/bower_components/*
+set wildmode=list:longest,full
 
 "Always show current position
 set ruler
@@ -442,6 +442,21 @@ map <leader>x :e ~/buffer.md<cr>
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
+nnoremap <leader>ev <C-w><C-v><C-l>:e ~/.vimrc<cr>
+map <Leader>sv :so ~/.vimrc<CR>
+
+map <Leader>h :set invhls<CR>
+noremap <Leader>i :set list!<CR>
+
+noremap <Up> <nop>
+noremap <Down> <nop>
+noremap <Left> <nop>
+noremap <Right> <nop>
+imap jj <c-c>
+
+" surround
+nmap <Leader>as ysiw
+
 if has("mac") || has("macunix")
   nmap <leader>d :Dash<cr>
 endif
@@ -536,7 +551,6 @@ noremap <Leader>n :NERDTreeToggle <cr>
 " bufexplorer *****************************************************************
 let g:bufExplorerDefaultHelp=1
 let g:bufExplorerShowDirectories=0
-let g:bufExplorerShowRelativePath=1
 
 " easymotion ******************************************************************
 "let g:EasyMotion_leader_key = '<Leader> em'
@@ -625,4 +639,18 @@ noremap <Leader>be :BufExplorer<cr>
 " Auotcomplete ****************************************************************
 let g:deoplete#enable_at_startup = 1
 
+
+" Command-T ******************************************************
+let g:CommandTMaxFiles=10000
+noremap <Leader>t :CommandTFlush<cr>\|:CommandT<cr>
+" Fugitive ***********************************************************************
+noremap <Leader>gs :Gstatus<cr>
+noremap <Leader>gd :Gvdiff<cr>
+noremap <Leader>g<S-k> :Gread<cr>
+noremap <Leader>g<S-u> :Gwrite<cr>
+noremap <Leader>gk :diffget<cr>
+noremap <Leader>gu :diffput<cr>
+noremap <Leader>gc :Gcommit<cr>
+
+colorscheme jellybeans
 

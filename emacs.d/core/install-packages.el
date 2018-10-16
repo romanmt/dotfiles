@@ -16,6 +16,7 @@
    (cons 'expand-region melpa)
    (cons 'fiplr melpa)
    (cons 'icicles melpa)
+   (cons 'haml-mode melpa)
    (cons 'jade-mode melpa)
    (cons 'js2-mode melpa)
    (cons 'js2-refactor melpa)

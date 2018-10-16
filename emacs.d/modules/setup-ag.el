@@ -3,6 +3,7 @@
 (setq ag-reuse-buffers 't)
 
 (setq ag-arguments
-  (list "--color" "--smart-case" "--nogroup" "--column" "--"))
+      (list "--ignore" "bower_components" "--ignore" "node_modules" "--ignore" "vendor" "--ignore" "public"
+            "--color" "--smart-case" "--nogroup" "--column" "--"))
 
 (provide 'setup-ag)
