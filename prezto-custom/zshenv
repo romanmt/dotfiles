@@ -1,6 +1,21 @@
-export PATH=$PATH:/usr/local/Cellar/node/11.6.0/bin
+export HOMEBREW_HOME=/opt/homebrew
+export PATH=${HOMEBREW_HOME}/bin:${PATH}
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# JVMs
+export PATH=${HOMEBREW_HOME}/opt/scala@2.12/bin:$PATH
+export PATH=${HOMEBREW_HOME}/opt/openjdk@11/bin:$PATH
+
+export JAVA_HOME=${HOMEBREW_HOME}/opt/openjdk@11/bin
+
+# Pyenv
+# $(pyenv init -) breaks zsh -- these do the job
+
+export PATH=/Users/jperkelens/.pyenv/shims:${PATH} 
+export PYENV_SHELL=zsh 
+
+# AWS 
+export AWS_PROFILE=dataeng-test
+export AWS_SDK_LOAD_CONFIG=1
 
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"

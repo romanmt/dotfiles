@@ -1,6 +1,6 @@
 [user]
-	name = Matt Roman
-	email = romanmt@gmail.com
+	name = JP Erkelens
+	email = jperkelens@gmail.com
 [core]
   editor = vim
 [color]
@@ -13,23 +13,23 @@
   c = commit -m
   ca = commit --amend -C HEAD
   co = !"f() { git checkout $1 && npm install; }; f"
-  master = !git co master && git pull && npm install
+  main = !git co main && git pull && npm install
   cob = checkout -b
   datetag = !git tag `date "+%Y%m%d%H%M"`
-  done = !git fetch && git rebase origin/master && git checkout master && git merge @{-1} && git push
+  done = !git fetch && git rebase origin/main && git checkout main && git merge @{-1} && git push
   lf = !sh -c 'git lg --grep=$1 --max-count=5' -
   lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   ir = !git rebase -i 
-  irm = !git rebase -i origin/master
+  irm = !git rebase -i origin/main
   next = "!git add . && git rebase --continue"
   rmb = !sh -c 'git branch -D $1 && git push origin :$1' -
   st = status
   today = log --stat --since='1 Day Ago' --graph --pretty=oneline --abbrev-commit --date=relative
   unadd = reset HEAD
-  up = !git fetch origin && git rebase origin/master
+  up = !git fetch origin && git rebase origin/main
   who = shortlog -n -s --no-merges
   upsubs = submodule foreach --recursive git submodule update --init
-  pl = !git branch --merged master | grep -v 'master$' | xargs git branch -d
+  pl = !git branch --merged main | grep -v 'main$' | xargs git branch -d
   pr = !git remote prune origin
 
 [push]

@@ -5,42 +5,36 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+source ${ZDOTDIR:-$HOME}/.zshenv
+
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" 
 fi
 
+
 # set up prompt
-autoload -Uz promptinit
-promptinit
+autoload -Uz promptinit 
+promptinit 
 prompt matt
 
-alias emacs="/usr/local/Cellar/emacs-plus/26.1/Emacs.app"
-
-# Customize to your needs...
-export BUNYAN_NO_PAGER=true
-export EDITOR=emacs
-export NODE_ENV=development
-export BOOT_JVM_OPTIONS="-client -XX:+TieredCompilation -XX:TieredStopAtLevel=1 -Xmx256m -XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled -Xverify:none"
+# Editorsetup
+export EDITOR=nvim
 
 if [[ "$OSTYPE" == "linux-gnu" ]]; then
   # linux config
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # Mac OSX config
   alias vim='nvim'
+  alias vi='nvim'
+  alias v='nvim' 
 fi
 
-LUNCHY_DIR=$(dirname `gem which lunchy`)/../extras
-  if [ -f $LUNCHY_DIR/lunchy-completion.zsh ]; then
-    . $LUNCHY_DIR/lunchy-completion.zsh
+# Completions
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
 fi
 
-if [[ -s "/usr/local/share/zsh/site-functions/_aws" ]]; then
-  source "/usr/local/share/zsh/site-functions/_aws"
-fi
-
-. /usr/local/opt/asdf/asdf.sh
-
-. /usr/local/opt/asdf/etc/bash_completion.d/asdf.bash
-
-. $(brew --prefix asdf)/asdf.sh

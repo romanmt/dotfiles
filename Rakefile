@@ -24,7 +24,7 @@ task term: [:install_zsh, :setup_prezto, :tmux]
 task :install_lunchy do
   unless system %{ lunchy }
     puts "Installing Lunchy"
-    puts %x{sudo gem install lunchy}
+    puts %x{brew install lunchy}
   end
 end
 
@@ -54,8 +54,9 @@ task :setup_prezto do
     FileUtils.ln_s File.expand_path(f), File.expand_path("~/.#{file_name}"), :force => true
   end
   prompt_file = 'prompt_matt_setup'
+  puts "Symlink " + prompt_file
   FileUtils.ln_s File.expand_path("./prezto-custom/#{prompt_file}"),
-    File.expand_path("prezto/prezto/modules/prompt/functions/#{prompt_file}"),
+    File.expand_path("~/.zprezto/modules/prompt/functions/#{prompt_file}"),
     :force => true
 end
 
@@ -71,12 +72,30 @@ end
 task :configure_tmux do
   puts "Configuring Tmux"
   source = "#{ENV['PWD']}/tmux/tmux.conf"
-  puts "symlink #{source}"
-  system %{ ln -s #{source} ~/.tmux.conf}
+  unless File.exists? source
+    puts "symlink #{source}"
+    system %{ ln -s #{source} ~/.tmux.conf}
+  end
 end
 
 # install spacemacs
-task editor: [:install_emacs, :install_spacemacs]
+task editor: [:install_neovim, :configure_vim]
+
+task :install_neovim do
+  puts "installing neovim"
+  puts %x{ brew install neovim }
+end
+
+task :configure_vim do
+  puts "Configuring vim"
+  source = "#{ENV['PWD']}/vim/vimrc"
+  puts "symlink #{source}"
+  system %{ ln -s #{source} ~/.vimrc }
+
+  source = "#{ENV['PWD']}/vim/init.vim"
+  puts "symlink #{source}"
+  system %{ ln -s #{source} ~/.config/nvim/init.vim }
+end
 
 task :install_emacs do
   puts "installing emacs"
