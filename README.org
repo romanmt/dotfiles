@@ -1,0 +1,104 @@
+#+TITLE: Dotfile configs
+#+PROPERTY: header-args :tangle
+#+AUTHOR: Matt Roman
+
+* File Headers
+Add the shebang line for the Zsh script.
+
+#+BEGIN_SRC zsh :tangle setup.sh
+#!/bin/zsh
+
+# Function to check if a command is installed
+function check_command_installed {
+    local command_name=$1
+    if command -v $command_name &> /dev/null; then
+        echo "$command_name is already installed."
+        return 0
+    else
+        echo "$command_name is not installed."
+        return 1
+    fi
+}
+#+END_SRC
+
+* Homebrew
+Install the homebrew package manger if it's not already installed.
+
+#+BEGIN_SRC zsh :tangle setup_homebrew.sh
+# Function to install Homebrew
+function install_homebrew {
+    echo "Installing Homebrew..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    if [ $? -eq 0 ]; then
+        echo "Homebrew installation successful."
+    else
+        echo "Homebrew installation failed."
+        exit 1
+    fi
+}
+
+. ./setup.sh
+# Check if Homebrew is installed
+if check_command_installed "brew"; then
+    echo "Skipping Homebrew installation."
+else
+    install_homebrew
+fi
+
+#+END_SRC
+* ASDF
+Set up the ASDF environment manager using homerew
+
+#+BEGIN_SRC zsh :tangle setup_asdf.sh
+
+# Function to install asdf
+function install_asdf {
+    echo "Installing asdf..."
+    brew install asdf
+    if [ $? -eq 0 ]; then
+        echo "asdf installation successful."
+    else
+        echo "asdf installation failed."
+        exit 1
+    fi
+}
+
+. ./setup.sh
+# Check if asdf is installed
+if check_command_installed "asdf"; then
+    echo "Skipping asdf installation."
+else
+    install_asdf
+fi
+#+END_SRC
+
+* Setup Ruby and Nodejs
+Use ASDF to setup some global languages that will be needed for doom emacs
+
+#+BEGIN_SRC zsh :tangle setup_asdf.sh
+function setup_asdf_plugins {
+    echo "Setting up asdf plugins..."
+
+    # Add Ruby plugin and install version
+    if ! asdf plugin-list | grep -q "ruby"; then
+        asdf plugin-add ruby
+    fi
+    asdf install ruby 3.3.3
+    asdf global ruby 3.3.3
+
+    # Add Node.js plugin and install version
+    if ! asdf plugin-list | grep -q "nodejs"; then
+        asdf plugin-add nodejs
+    fi
+    asdf install nodejs 22.3.0
+    asdf global nodejs 22.3.0
+
+    echo "ruby 3.3.3" > ~/.tool-versions
+    echo "nodejs 22.3.0" >> ~/.tool-versions
+
+    echo "asdf plugins setup complete."
+}
+
+# Set up asdf plugins and versions
+setup_asdf_plugins
+#+END_SRC
