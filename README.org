@@ -25,6 +25,8 @@ function check_command_installed {
 Install the homebrew package manger if it's not already installed.
 
 #+BEGIN_SRC zsh :tangle setup_homebrew.sh
+#!/bin/zsh
+
 # Function to install Homebrew
 function install_homebrew {
     echo "Installing Homebrew..."
@@ -50,6 +52,7 @@ fi
 Set up the ASDF environment manager using homerew
 
 #+BEGIN_SRC zsh :tangle setup_asdf.sh
+#!/bin/zsh
 
 # Function to install asdf
 function install_asdf {
@@ -101,4 +104,65 @@ function setup_asdf_plugins {
 
 # Set up asdf plugins and versions
 setup_asdf_plugins
+#+END_SRC
+
+* Emacs and Doom Emacs
+Install Emacs using Homebrew and set up Doom Emacs.
+
+#+BEGIN_SRC zsh :tangle setup_emacs.sh
+# Function to install Emacs
+function install_emacs {
+    echo "Installing Emacs..."
+    brew install emacs
+    if [ $? -eq 0 ]; then
+        echo "Emacs installation successful."
+    else
+        echo "Emacs installation failed."
+        exit 1
+    fi
+}
+
+# Function to install Doom Emacs
+function install_doom_emacs {
+    echo "Installing Doom Emacs..."
+    git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+    ~/.emacs.d/bin/doom install
+    if [ $? -eq 0 ]; then
+        echo "Doom Emacs installation successful."
+    else
+        echo "Doom Emacs installation failed."
+        exit 1
+    fi
+}
+
+. ./setup.sh
+# Check if Emacs is installed
+if check_command_installed "emacs"; then
+    echo "Skipping Emacs installation."
+else
+    install_emacs
+fi
+
+# Check if Doom Emacs is installed
+if [ -d "$HOME/.config/doom" ]; then
+    echo "Doom Emacs is already installed."
+else
+    install_doom_emacs
+fi
+
+# Function to copy Doom Emacs configuration
+function copy_doom_emacs_config {
+    echo "Copying Doom Emacs configuration..."
+    mkdir -p ~/.config/doom
+    cp -r ./emacs/* ~/.config/doom/
+    if [ $? -eq 0 ]; then
+        echo "Doom Emacs configuration copied successfully."
+    else
+        echo "Failed to copy Doom Emacs configuration."
+        exit 1
+    fi
+}
+
+# Copy Doom Emacs configuration
+copy_doom_emacs_config
 #+END_SRC

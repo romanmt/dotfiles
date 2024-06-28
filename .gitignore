@@ -2,6 +2,7 @@
 /emacs.d/ac*
 /emacs.d/.org*
 /vim/plugged/*
+setup*.sh
 
 # Numerous always-ignore extensions
 *.diff
@@ -14,7 +15,6 @@
 *.vi
 *~
 *.sass-cache
-*.org
 
 # OS or Editor folders
 .DS_Store
