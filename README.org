@@ -135,6 +135,18 @@ function install_doom_emacs {
     fi
 }
 
+# Function to install Graphviz
+function install_graphviz {
+    echo "Installing Graphviz..."
+    brew install graphviz
+    if [ $? -eq 0 ]; then
+        echo "Graphviz installation successful."
+    else
+        echo "Graphviz installation failed."
+        exit 1
+    fi
+}
+
 . ./setup.sh
 # Check if Emacs is installed
 if check_command_installed "emacs"; then
@@ -142,6 +154,9 @@ if check_command_installed "emacs"; then
 else
     install_emacs
 fi
+
+# Install Graphviz
+install_graphviz
 
 # Check if Doom Emacs is installed
 if [ -d "$HOME/.config/doom" ]; then
