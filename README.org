@@ -2,6 +2,13 @@
 #+PROPERTY: header-args :tangle
 #+AUTHOR: Matt Roman
 
+* Table of Contents :toc:
+- [[#file-headers][File Headers]]
+- [[#homebrew][Homebrew]]
+- [[#asdf][ASDF]]
+- [[#setup-ruby-and-nodejs][Setup Ruby and Nodejs]]
+- [[#emacs-and-doom-emacs][Emacs and Doom Emacs]]
+
 * File Headers
 Add the shebang line for the Zsh script.
 
@@ -147,23 +154,18 @@ function install_graphviz {
     fi
 }
 
-. ./setup.sh
-# Check if Emacs is installed
-if check_command_installed "emacs"; then
-    echo "Skipping Emacs installation."
-else
-    install_emacs
-fi
-
-# Install Graphviz
-install_graphviz
-
-# Check if Doom Emacs is installed
-if [ -d "$HOME/.config/doom" ]; then
-    echo "Doom Emacs is already installed."
-else
-    install_doom_emacs
-fi
+# Function to install Aspell
+function install_aspell {
+    echo "Installing Aspell..."
+    brew install aspell
+    brew install aspell-en
+    if [ $? -eq 0 ]; then
+        echo "Aspell installation successful."
+    else
+        echo "Aspell installation failed."
+        exit 1
+    fi
+}
 
 # Function to copy Doom Emacs configuration
 function copy_doom_emacs_config {
@@ -178,6 +180,28 @@ function copy_doom_emacs_config {
     fi
 }
 
+. ./setup.sh
+# Check if Emacs is installed
+if check_command_installed "emacs"; then
+    echo "Skipping Emacs installation."
+else
+    install_emacs
+fi
+
+# Install Graphviz
+install_graphviz
+
+# Install Aspell
+install_aspell
+
+# Check if Doom Emacs is installed
+if [ -d "$HOME/.config/doom" ]; then
+    echo "Doom Emacs is already installed."
+else
+    install_doom_emacs
+fi
+
 # Copy Doom Emacs configuration
 copy_doom_emacs_config
 #+END_SRC
+*

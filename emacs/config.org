@@ -9,6 +9,7 @@
 - [[#emacs-line-numbers][Emacs Line Numbers]]
 - [[#project-configuration][Project configuration]]
 - [[#org-and-org-roam-configuration][Org and Org-roam configuration]]
+- [[#hunspell-configuration][Hunspell configuration]]
 - [[#github-copilot-configuration][Github Copilot configuration]]
 - [[#initial-window-size][Initial Window Size]]
 
@@ -83,7 +84,7 @@ available. You can either set `doom-theme' or manually load a theme with the
 
 #+BEGIN_SRC elisp
 
-(setq doom-theme 'doom-material
+(setq doom-theme 'doom-palenight
       doom-font (font-spec :famly "Victor Mono" :size 16 )
       doom-big-font (font-spec :family "Victor Mono" :size 24))
 
@@ -175,6 +176,7 @@ change `org-directory'. It must be set before org loads!
 
 #+END_SRC
 
+* Hunspell configuration
 
 * Github Copilot configuration
 
@@ -197,10 +199,18 @@ Accept completion from copilot and fallback to company
 Set the initial window size for emacs
 
 #+BEGIN_SRC elisp
+;; Set the initial frame size and position
+(setq initial-frame-alist
+      '((width . 140)  ;; Width in characters
+        (height . 48)  ;; Height in characters
+        (left . 50)    ;; Distance from left edge of the screen in pixels
+        (top . 50)))   ;; Distance from top edge of the screen in pixels
 
-(if (window-system)
-  (progn
-    (set-frame-height (selected-frame) 48)
-    (set-frame-width (selected-frame) 140)))
+;; Set the default frame size and position for new frames
+(setq default-frame-alist
+      '((width . 140)
+        (height . 48)
+        (left . 50)
+        (top . 50)))
 
 #+END_SRC
