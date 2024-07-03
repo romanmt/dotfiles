@@ -1,7 +1,8 @@
 #+TITLE: Doom Emacs Config
 #+PROPERTY: header-args :tangle config.el
 #+STARTUP: showeverything
-#+AUTHR: Matt Roman
+#+auto_tangle: t
+#+AUTHOR: Matt Roman
 
 * Table of Contents :toc:
 - [[#about-this-config][About This Config]]
@@ -9,7 +10,8 @@
 - [[#emacs-line-numbers][Emacs Line Numbers]]
 - [[#project-configuration][Project configuration]]
 - [[#org-and-org-roam-configuration][Org and Org-roam configuration]]
-- [[#hunspell-configuration][Hunspell configuration]]
+- [[#org-auto-tangle][Org Auto Tangle]]
+- [[#org-roam-ui][Org-roam UI]]
 - [[#github-copilot-configuration][Github Copilot configuration]]
 - [[#initial-window-size][Initial Window Size]]
 
@@ -130,6 +132,7 @@ change `org-directory'. It must be set before org loads!
 
 (after! org-roam
   (setq org-roam-directory (file-truename "~/Library/Mobile Documents/com~apple~CloudDocs/.hidden/roamnotes"))
+
   (setq org-roam-dailies-directory (file-truename "~/Library/Mobile Documents/com~apple~CloudDocs/.hidden/daily"))
 
   ;; If you're using a vertical completion framework, you might want a more informative completion interface
@@ -176,7 +179,38 @@ change `org-directory'. It must be set before org loads!
 
 #+END_SRC
 
-* Hunspell configuration
+* Org Auto Tangle
+
+Configure plugin to automatically tangle org files when saved
+
+#+BEGIN_SRC elisp
+
+(use-package org-auto-tangle
+  :defer t
+  :hook (org-mode . org-auto-tangle-mode))
+
+#+END_SRC
+
+* Org-roam UI
+
+Configure the org roam UI plugin.
+[[https://github.com/org-roam/org-roam-ui][Org Roam UI Plugin on github]]
+
+#+BEGIN_SRC elisp
+
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+    :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))
+
+#+END_SRC
 
 * Github Copilot configuration
 

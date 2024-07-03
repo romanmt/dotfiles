@@ -3,6 +3,8 @@
 /emacs.d/.org*
 /vim/plugged/*
 setup*.sh
+/emacs/config.el
+/emacs/packages.el
 
 # Numerous always-ignore extensions
 *.diff
