@@ -4,6 +4,7 @@
 #+AUTHOR: Matt Roman
 
 * Table of Contents :toc:
+- [[#how-to-use-this-project][How to use this project]]
 - [[#file-headers-and-functions][File Headers and functions]]
 - [[#homebrew][Homebrew]]
 - [[#asdf][ASDF]]
@@ -11,6 +12,18 @@
 - [[#emacs-and-doom-emacs][Emacs and Doom Emacs]]
 - [[#install-iterm2][Install iTerm2]]
 - [[#setup-powerlevel10k][Setup Powerlevel10k]]
+
+* How to use this project
+
+This project is managed with Chezmoi. https://www.chezmoi.io/
+
+1. CD to the chezmoi directory
+
+   chezmoi cd
+
+2. Update your environment with the latest configs
+
+   chezmoi update
 
 * File Headers and functions
 
