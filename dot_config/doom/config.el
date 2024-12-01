@@ -11,6 +11,8 @@
 
   (add-hook 'org-after-refile-insert-hook #'org-save-all-org-buffers)
 
+  (setq org-log-done 'time)
+
   (setq org-agenda-block-separator 8411)
 
   (setq org-agenda-files
@@ -24,11 +26,18 @@
         ("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org" :level . 1)
         ("~/Library/Mobile Documents/com~apple~CloudDocs/org/inbox.org" :level . 1)))    ;; Refile to level 1 headings in someday.org
 
-  (setq org-capture-templates
+(setq org-capture-templates
       '(("t" "Todo" entry
-         (file+headline "~/Library/Mobile Documents/com~apple~CloudDocs/org/inbox.org" "Tasks")  ;; Path to your inbox.org file and the headline to use
-         "* TODO %?\n  %i\n  %a"                      ;; Template for the TODO item
-         )))                            ;; Optional: Add a blank line after each captured item
+         (file+headline "~/Library/Mobile Documents/com~apple~CloudDocs/org/inbox.org" "Tasks")
+         "* TODO %?\n  %i\n  %a")
+
+        ("o" "One-on-One Meeting Topic" entry
+         (file+headline "~/Library/Mobile Documents/com~apple~CloudDocs/org/one-on-ones.org" "Topics")
+         "* [ ] %?\n  %i\n  Added: %U")
+
+        ("p" "Project" entry
+         (file+headline "~/Library/Mobile Documents/com~apple~CloudDocs/org/projects.org" "Active Projects")
+         "* %? :project:\n  %i\n  Created: %U")))
 
   (setq org-agenda-custom-commands
       '(("i" "Inbox"
@@ -54,9 +63,32 @@
 
         ("w" "Weekly Agenda"
          ((agenda "" ((org-agenda-span 'week)
+                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org"))
+          (org-agenda-override-header "Next Actions @Work")
                       (org-deadline-warning-days 7)))
-          (tags-todo "+PRIORITY=\"A\""
-                     ((org-agenda-overriding-header "High Priority Tasks")))))
+          (todo ""
+                     ((org-agenda-overriding-header "Tasks Without Due or Scheduled Dates")
+                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org"))
+                      (org-agenda-sorting-strategy '(priority-down))
+          (org-agenda-override-header "Next Actions @Work")
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-entry-if 'scheduled 'deadline))))))
+
+        ("o" "One-on-Ones"
+         ((tags-todo ""
+                     ((org-agenda-files
+                       '("~/Library/Mobile Documents/com~apple~CloudDocs/org/one-on-ones.org"))
+                      (org-agenda-overriding-header "Open Topics")
+                      ))
+
+          (tags ""
+                ((org-agenda-files
+                  '("~/Library/Mobile Documents/com~apple~CloudDocs/org/one-on-ones.org"))
+                 (org-agenda-overriding-header "Completed Topics")
+                 (org-agenda-skip-function
+                  '(org-agenda-skip-entry-if 'notregexp "\\[X\\]"))
+                 ))))
+
 
         ("p" "Planning"
          ((todo ""
@@ -70,15 +102,14 @@
     (tags-todo "-{.*}"
                      ((org-agenda-overriding-header "Untagged Tasks")))
     (todo "" ((org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/inbox.org"))
-                      (org-agenda-overriding-header "Unprocessed Inbox Items")))
-                )
-         )
+                      (org-agenda-overriding-header "Unprocessed Inbox Items")))))
 
         ("s" "Someday"
          todo ""
          ((org-agenda-files
            '("~/Library/Mobile Documents/com~apple~CloudDocs/org/someday.org"))
           (org-agenda-overriding-header "Someday Maybe")))))
+
 )
 
 (after! org-roam
@@ -160,4 +191,4 @@
         (left . 50)
         (top . 50)))
 
-(add-hook 'find-file-hook (lambda () (set-buffer-file-coding-system 'unix)))
+
