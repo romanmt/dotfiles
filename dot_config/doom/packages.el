@@ -7,3 +7,4 @@
 (package! simple-httpd)
 (package! f)
 (package! org-roam-ui)
+(package! org-modern)

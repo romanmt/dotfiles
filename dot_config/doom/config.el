@@ -15,6 +15,22 @@
 
   (setq org-agenda-block-separator 8411)
 
+  ;; Enable org-modern mode for Org buffers
+  (use-package! org-modern
+    :hook
+    (org-mode . org-modern-mode)
+    :config
+    ;; Optional: Customize appearance
+    (setq org-modern-star ["◉" "○" "●" "◆" "▶"]
+          org-modern-list '((?- . "•") (?+ . "‣") (?* . "◦"))
+          org-modern-todo-faces
+          '(("TODO" . "red")
+            ("DONE" . "green")
+            ("IN-PROGRESS" . "yellow"))))
+
+;; Optional: Enable for agenda
+(add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
+
   (setq org-agenda-files
       '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org"
         "~/Library/Mobile Documents/com~apple~CloudDocs/org/someday.org"
