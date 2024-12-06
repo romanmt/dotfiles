@@ -1,6 +1,7 @@
 (package! copilot
   :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 
+(package! all-the-icons)
 (package! org-auto-tangle)
 (unpin! org-roam)
 (package! websocket)

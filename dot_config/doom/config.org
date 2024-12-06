@@ -135,6 +135,20 @@ change `org-directory'. It must be set before org loads!
 
   (setq org-agenda-block-separator 8411)
 
+  (setq org-agenda-hide-tags-regexp ".*")
+
+
+
+;; Custom styles for dates in agenda
+(custom-set-faces!
+  '(org-agenda-date :inherit outline-1 :height 1.15)
+  '(org-agenda-date-today :inherit outline-2 :height 1.15)
+  '(org-agenda-date-weekend :inherit outline-1 :height 1.15)
+  '(org-agenda-date-weekend-today :inherit outline-2 :height 1.15)
+  '(org-super-agenda-header :inherit custom-button :weight bold :height 1.05)
+  `(link :foreground unspecified :underline nil :background ,(nth 1 (nth 7 doom-themes--colors)))
+  '(org-link :foreground unspecified))
+
   ;; Enable org-modern mode for Org buffers
   (use-package! org-modern
     :hook
@@ -143,10 +157,27 @@ change `org-directory'. It must be set before org loads!
     ;; Optional: Customize appearance
     (setq org-modern-star ["◉" "○" "●" "◆" "▶"]
           org-modern-list '((?- . "•") (?+ . "‣") (?* . "◦"))
+          org-modern-priority '((?A . "[A]") (?B . "[B]") (?C . "[C]"))
           org-modern-todo-faces
           '(("TODO" . "red")
             ("DONE" . "green")
             ("IN-PROGRESS" . "yellow"))))
+
+  (setq org-agenda-category-icon-alist
+      `(
+        ("home" ,(list (all-the-icons-faicon "home" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
+        ("work" ,(list (all-the-icons-faicon "building" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
+        ("computer" ,(list (all-the-icons-faicon "laptop" :v-adjust 0.01)) nil nil :ascent center)
+        ("errands" ,(list (all-the-icons-faicon "car" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
+        ("phone" ,(list (all-the-icons-faicon "phone" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
+   ))
+
+
+  (setq org-agenda-prefix-format '(
+ (agenda . "  %?-2i %s %t")
+ (todo . " %?-3i  ")
+ (tags . " %i %-12:c")
+ (search . " %i %-12:c")))
 
 ;; Optional: Enable for agenda
 (add-hook 'org-agenda-finalize-hook #'org-modern-agenda)
@@ -197,18 +228,29 @@ change `org-directory'. It must be set before org loads!
          ((org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org"))
           (org-agenda-override-header "Next Actions @Work")))))
 
-        ("w" "Weekly Agenda"
-         ((agenda "" ((org-agenda-span 'week)
-                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org"))
-          (org-agenda-override-header "Next Actions @Work")
-                      (org-deadline-warning-days 7)))
+        ("d" "Daily Agenda"
+         ((agenda "" ((org-agenda-span 'day)
+                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org")
+                      (org-agenda-override-header "Next Actions @Work")
+                      (org-deadline-warning-days 7))))
           (todo ""
                      ((org-agenda-overriding-header "Tasks Without Due or Scheduled Dates")
-                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org"))
-                      (org-agenda-sorting-strategy '(priority-down))
-          (org-agenda-override-header "Next Actions @Work")
+                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org")
+                  agenda-sorting-strategy '(priority-down)
                       (org-agenda-skip-function
-                       '(org-agenda-skip-entry-if 'scheduled 'deadline))))))
+                       '(org-agenda-skip-entry-if 'scheduled 'deadline)))))))
+
+        ("w" "Weekly Agenda"
+         ((agenda "" ((org-agenda-span 'week)
+                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org")
+                (org-agenda-override-header "Next Actions @Work")
+                      (org-deadline-warning-days 7))))
+          (todo ""
+                     ((org-agenda-overriding-header "Tasks Without Due or Scheduled Dates")
+                      (org-agenda-files '("~/Library/Mobile Documents/com~apple~CloudDocs/org/next.org")
+                      (org-agenda-sorting-strategy '(priority-down)
+                      (org-agenda-skip-function
+                       '(org-agenda-skip-entry-if 'scheduled 'deadline))))))))
 
         ("o" "One-on-Ones"
          ((tags-todo ""
