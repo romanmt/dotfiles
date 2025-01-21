@@ -89,4 +89,4 @@ else
 fi
 
 # link Doom Emacs configuration
-link_doom_emacs_config
+#link_doom_emacs_config
