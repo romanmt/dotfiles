@@ -54,18 +54,24 @@ function install_aspell {
 
 # Function to create symlinks for Doom Emacs configuration
 function link_doom_emacs_config {
-    echo "Linking Doom Emacs configuration..."
-    mkdir -p ~/.config/doom
-    for file in ./emacs/*.el; do
-        ln -sf $(realpath "$file") ~/.config/doom/
-    done
 
-    if [ $? -eq 0 ]; then
-        echo "Doom Emacs configuration linked successfully."
-    else
-        echo "Failed to link Doom Emacs configuration."
-        exit 1
-    fi
+    echo "Linking Doom Emacs configuration..."
+
+    SOURCE_DIR="$HOME/.config/doom"
+    TARGET_DIR="$HOME/.emacs.d"
+
+    for ITEM in "$SOURCE_DIR"/*.el; do
+        BASENAME=$(basename "$ITEM")
+
+        TARGET_PATH="$TARGET_DIR/$BASENAME"
+
+        if [ -e "$TARGET_PATH" ]; then
+            echo "Skipping $BASENAME: already exists"
+        else
+            ln -s "$ITEM" "$TARGET_PATH"
+            echo "Created symlink for $BASENAME"
+        fi
+    done
 }
 
 . ./setup.sh
