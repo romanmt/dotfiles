@@ -16,8 +16,9 @@ function install_emacs {
 # Function to install Doom Emacs
 function install_doom_emacs {
     echo "Installing Doom Emacs..."
-    git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
-    ~/.emacs.d/bin/doom install
+    git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
+    ~/.config/emacs/bin/doom install
+
     if [ $? -eq 0 ]; then
         echo "Doom Emacs installation successful."
     else
@@ -76,7 +77,7 @@ else
 fi
 
 # Install Graphviz
-install_graphviz
+#install_graphviz
 
 # Install Aspell
 install_aspell
@@ -89,4 +90,4 @@ else
 fi
 
 # link Doom Emacs configuration
-#link_doom_emacs_config
+# link_doom_emacs_config
