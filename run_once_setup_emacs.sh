@@ -82,7 +82,7 @@ install_graphviz
 install_aspell
 
 # Check if Doom Emacs is installed
-if [ -d "$HOME/.config/doom" ]; then
+if [ -d "$HOME/.config/emacs/bin/doom" ]; then
     echo "Doom Emacs is already installed."
 else
     install_doom_emacs
