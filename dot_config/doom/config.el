@@ -47,7 +47,7 @@
       `(
         ("home" ,(list (all-the-icons-faicon "home" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
         ("work" ,(list (all-the-icons-faicon "building" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
-        ("computer" ,(list (all-the-icons-faicon "laptop" :v-adjust 0.01)) nil nil :ascent center)
+        ("computer" ,(list (all-the-icons-faicon "laptop" :height 0.9 :v-adjust 0.01)) nil nil :ascent center)
         ("errands" ,(list (all-the-icons-faicon "car" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
         ("phone" ,(list (all-the-icons-faicon "phone" :height 0.9 :v-adjust 0.005)) nil nil :ascent center)
    ))
