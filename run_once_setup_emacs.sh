@@ -3,8 +3,8 @@
 # Function to install Emacs
 function install_emacs {
     echo "Installing Emacs..."
-    brew tap jimeh/emacs-builds
-    brew install --cask emacs-app-good
+    brew tap d12frosted/emacs-plus
+    brew install emacs-plus@28 --with-native-comp
     if [ $? -eq 0 ]; then
         echo "Emacs installation successful."
     else
