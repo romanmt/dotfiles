@@ -118,8 +118,8 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$HOME/.asdf/shims:$PATH"
 
 source $(dirname $(gem which colorls))/tab_complete.sh
-alias ls=colorls
-alias lc='colorls -lA --sd'
+alias ls=colorls --light
+alias lc='colorls -lA --sd --light'
 
 # for erlang install
 export JAVA_HOME=$(asdf where java)
