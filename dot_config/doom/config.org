@@ -90,7 +90,7 @@ available. You can either set `doom-theme' or manually load a theme with the
 #+BEGIN_SRC elisp
 
 (setq doom-theme 'doom-solarized-light
-      doom-font (font-spec :famly "Victor Mono" :size 16 )
+      doom-font (font-spec :family "Victor Mono" :size 16 )
       doom-big-font (font-spec :family "Victor Mono" :size 24))
 
 #+END_SRC

@@ -16,14 +16,23 @@
 * How to use this project
 
 This project is managed with Chezmoi. https://www.chezmoi.io/
+Follow these steps when setting up a new computer
 
-1. CD to the chezmoi directory
+1. install iTerm2
+
+2. Install Git
+
+3. Install chezmoi
+
+   brew install chezmoi
+
+4. CD to the chezmoi directory
 
    chezmoi cd
 
-2. Update your environment with the latest configs
+5. Update your environment with the latest configs
 
-   chezmoi update
+   chezmoi init --apply romanmt
 
 * File Headers and functions
 

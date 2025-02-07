@@ -3,8 +3,7 @@
 # Function to install Emacs
 function install_emacs {
     echo "Installing Emacs..."
-    brew tap d12frosted/emacs-plus
-    brew install emacs-plus@28 --with-native-comp
+    brew install emacs
     if [ $? -eq 0 ]; then
         echo "Emacs installation successful."
     else
@@ -16,9 +15,8 @@ function install_emacs {
 # Function to install Doom Emacs
 function install_doom_emacs {
     echo "Installing Doom Emacs..."
-    git clone --depth 1 https://github.com/doomemacs/doomemacs ~/.config/emacs
-    ~/.config/emacs/bin/doom install
-
+    git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+    ~/.emacs.d/bin/doom install
     if [ $? -eq 0 ]; then
         echo "Doom Emacs installation successful."
     else
@@ -54,24 +52,18 @@ function install_aspell {
 
 # Function to create symlinks for Doom Emacs configuration
 function link_doom_emacs_config {
-
     echo "Linking Doom Emacs configuration..."
-
-    SOURCE_DIR="$HOME/.config/doom"
-    TARGET_DIR="$HOME/.emacs.d"
-
-    for ITEM in "$SOURCE_DIR"/*.el; do
-        BASENAME=$(basename "$ITEM")
-
-        TARGET_PATH="$TARGET_DIR/$BASENAME"
-
-        if [ -e "$TARGET_PATH" ]; then
-            echo "Skipping $BASENAME: already exists"
-        else
-            ln -s "$ITEM" "$TARGET_PATH"
-            echo "Created symlink for $BASENAME"
-        fi
+    mkdir -p ~/.config/doom
+    for file in ./emacs/*.el; do
+        ln -sf $(realpath "$file") ~/.config/doom/
     done
+
+    if [ $? -eq 0 ]; then
+        echo "Doom Emacs configuration linked successfully."
+    else
+        echo "Failed to link Doom Emacs configuration."
+        exit 1
+    fi
 }
 
 . ./setup.sh
@@ -83,13 +75,13 @@ else
 fi
 
 # Install Graphviz
-#install_graphviz
+install_graphviz
 
 # Install Aspell
 install_aspell
 
 # Check if Doom Emacs is installed
-if [ -d "$HOME/.config/emacs/bin/doom" ]; then
+if [ -d "$HOME/.config/doom" ]; then
     echo "Doom Emacs is already installed."
 else
     install_doom_emacs
