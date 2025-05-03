@@ -38,244 +38,26 @@ Follow these steps when setting up a new computer
 
 Add the shebang line for the Zsh script.
 
-#+BEGIN_SRC zsh :tangle run_once_setup.sh :tangle-mode "rwxr-xr-x"
-#!/bin/zsh
-
-# Function to check if a command is installed test
-function check_command_installed {
-    local command_name=$1
-    if command -v $command_name &> /dev/null; then
-        echo "$command_name is already installed."
-        return 0
-    else
-        echo "$command_name is not installed."
-        return 1
-    fi
-}
-#+END_SRC
-
 * Homebrew
 
 Install the homebrew package manger if it's not already installed.
-
-#+BEGIN_SRC zsh :tangle run_once_setup_homebrew.sh :tangle-mode "rwxr-xr-x"
-#!/bin/zsh
-
-# Function to install Homebrew
-function install_homebrew {
-    echo "Installing Homebrew..."
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    if [ $? -eq 0 ]; then
-        echo "Homebrew installation successful."
-    else
-        echo "Homebrew installation failed."
-        exit 1
-    fi
-}
-
-. ./setup.sh
-# Check if Homebrew is installed
-if check_command_installed "brew"; then
-    echo "Skipping Homebrew installation."
-else
-    install_homebrew
-fi
-
-#+END_SRC
 
 * ASDF
 
 Set up the ASDF environment manager using homerew
 
-#+BEGIN_SRC zsh :tangle run_once_setup_asdf.sh :tangle-mode "rwxr-xr-x"
-#!/bin/zsh
-
-# Function to install asdf
-function install_asdf {
-    echo "Installing asdf..."
-    brew install asdf
-    if [ $? -eq 0 ]; then
-        echo "asdf installation successful."
-    else
-        echo "asdf installation failed."
-        exit 1
-    fi
-}
-
-. ./setup.sh
-# Check if asdf is installed
-if check_command_installed "asdf"; then
-    echo "Skipping asdf installation."
-else
-    install_asdf
-fi
-
-#+END_SRC
-
 * Setup Ruby and Nodejs
 
 Use ASDF to setup some global languages that will be needed for doom emacs
-
-#+BEGIN_SRC zsh :tangle run_once_setup_asdf.sh :tangle-mode "rwxr-xr-x"
-#!/bin/zsh
-
-function setup_asdf_plugins {
-    echo "Setting up asdf plugins..."
-
-    # Add Ruby plugin and install version
-    if ! asdf plugin-list | grep -q "ruby"; then
-        asdf plugin-add ruby
-    fi
-    asdf install ruby 3.3.3
-    asdf global ruby 3.3.3
-
-    # Add Node.js plugin and install version
-    if ! asdf plugin-list | grep -q "nodejs"; then
-        asdf plugin-add nodejs
-    fi
-    asdf install nodejs 22.3.0
-    asdf global nodejs 22.3.0
-
-    echo "ruby 3.3.3" > ~/.tool-versions
-    echo "nodejs 22.3.0" >> ~/.tool-versions
-
-    echo "asdf plugins setup complete."
-}
-
-# Set up asdf plugins and versions
-setup_asdf_plugins
-
-#+END_SRC
 
 * Emacs and Doom Emacs
 
 Install Emacs using Homebrew and set up Doom Emacs.
 
-#+BEGIN_SRC zsh :tangle run_once_setup_emacs.sh :tangle-mode "rwxr-xr-x"
-#!/bin/zsh
-
-# Function to install Emacs
-function install_emacs {
-    echo "Installing Emacs..."
-    brew install emacs
-    if [ $? -eq 0 ]; then
-        echo "Emacs installation successful."
-    else
-        echo "Emacs installation failed."
-        exit 1
-    fi
-}
-
-# Function to install Doom Emacs
-function install_doom_emacs {
-    echo "Installing Doom Emacs..."
-    git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
-    ~/.emacs.d/bin/doom install
-    if [ $? -eq 0 ]; then
-        echo "Doom Emacs installation successful."
-    else
-        echo "Doom Emacs installation failed."
-        exit 1
-    fi
-}
-
-# Function to install Graphviz
-function install_graphviz {
-    echo "Installing Graphviz..."
-    brew install graphviz
-    if [ $? -eq 0 ]; then
-        echo "Graphviz installation successful."
-    else
-        echo "Graphviz installation failed."
-        exit 1
-    fi
-}
-
-# Function to install Aspell
-function install_aspell {
-    echo "Installing Aspell..."
-    brew install aspell
-    #brew install aspell-en
-    if [ $? -eq 0 ]; then
-        echo "Aspell installation successful."
-    else
-        echo "Aspell installation failed."
-        exit 1
-    fi
-}
-
-# Function to create symlinks for Doom Emacs configuration
-function link_doom_emacs_config {
-    echo "Linking Doom Emacs configuration..."
-    mkdir -p ~/.config/doom
-    for file in ./emacs/*.el; do
-        ln -sf $(realpath "$file") ~/.config/doom/
-    done
-
-    if [ $? -eq 0 ]; then
-        echo "Doom Emacs configuration linked successfully."
-    else
-        echo "Failed to link Doom Emacs configuration."
-        exit 1
-    fi
-}
-
-. ./setup.sh
-# Check if Emacs is installed
-if check_command_installed "emacs"; then
-    echo "Skipping Emacs installation."
-else
-    install_emacs
-fi
-
-# Install Graphviz
-install_graphviz
-
-# Install Aspell
-install_aspell
-
-# Check if Doom Emacs is installed
-if [ -d "$HOME/.config/doom" ]; then
-    echo "Doom Emacs is already installed."
-else
-    install_doom_emacs
-fi
-
-# link Doom Emacs configuration
-link_doom_emacs_config
-
-#+END_SRC
-
 * Install iTerm2
 
 Install iTerm2 terminal application from homebrew
 
-#+BEGIN_SRC zsh :tangle run_once_setup_iterm.sh :tangle-mode "rwxr-xr-x"
-#!/bin/zsh
-
-. ./setup.sh
-# Check if iTerm is installed
-if check_command_installed "open -a iTerm"; then
-    echo "Skipping asdf installation."
-else
-    brew install --cask iterm2
-fi
-
-#+END_SRC
-
 * Setup Powerlevel10k
 
 Install nerd fonts for powerline
-
-#+BEGIN_SRC zsh :tangle run_once_setup_fonts.sh :tangle-mode "rwxr-xr-x"
-#!/bin/bash
-
-brew install romkatv/powerlevel10k/powerlevel10k
-
-# Tap the Homebrew Fonts Cask (may be deprecated)
-brew tap homebrew/cask-fonts
-
-# Install a Powerline-compatible font (Meslo LG Nerd Font)
-brew install --cask font-meslo-lg-nerd-font
-
-#+END_SRC

@@ -1,131 +1,15 @@
-#+TITLE:
-(add-hook 'find-file-hook (lambda () (set-buffer-file-coding-system 'unix)))
+;; Combined Doom Emacs config and packages
 
- Doom Emacs Config
-#+PROPERTY: header-args :tangle config.el
-#+STARTUP: showeverything
-#+auto_tangle: t
-#+AUTHOR: Matt Roman
-
-* Table of Contents :toc:
-- [[#about-this-config][About This Config]]
-- [[#font-configuration][Font Configuration]]
-- [[#emacs-line-numbers][Emacs Line Numbers]]
-- [[#project-configuration][Project configuration]]
-- [[#org-and-org-roam-configuration][Org and Org-roam configuration]]
-- [[#org-auto-tangle][Org Auto Tangle]]
-- [[#github-copilot-configuration][Github Copilot configuration]]
-- [[#initial-window-size][Initial Window Size]]
-- [[#handle-file-system-coding][Handle file system coding]]
-
-* About This Config
-
-$DOOMDIR/config.el -*- lexical-binding: t; -*-
-
-Place your private configuration here! Remember, you do not need to run 'doom
-sync' after modifying this file!
-
-
-Some functionality uses this to identify you, e.g. GPG configuration, email
-clients, file templates and snippets. It is optional.
-(setq user-full-name "John Doe"
-      user-mail-address "john@doe.com")
-
-Whenever you reconfigure a package, make sure to wrap your config in an
-`after!' block, otherwise Doom's defaults may override your settings. E.g.
-
-  (after! PACKAGE
-    (setq x y))
-
-The exceptions to this rule:
-
-  - Setting file/directory variables (like `org-directory')
-  - Setting variables which explicitly tell you to set them before their
-    package is loaded (see 'C-h v VARIABLE' to look up their documentation).
-  - Setting doom variables (which start with 'doom-' or '+').
-
-Here are some additional functions/macros that will help you configure Doom.
-
- `load!' for loading external *.el files relative to this one
-- `use-package!' for configuring packages
-- `after!' for running code after a package has loaded
-- `add-load-path!' for adding directories to the `load-path', relative to
-   this file. Emacs searches the `load-path' when you load packages with
-   `require' or `use-package'.
-- `map!' for binding new keys
-
-To get information about any of these functions/macros, move the cursor over
-the highlighted symbol at press 'K' (non-evil users must press 'C-c c k').
-This will open documentation for it, including demos of how they are used.
-Alternatively, use `C-h o' to look up a symbol (functions, variables, faces,
-etc).
-
-You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
-
-* Font Configuration
-
-Doom exposes five (optional) variables for controlling fonts in Doom:
-- `doom-font' -- the primary font to use
-- `doom-variable-pitch-font' -- a non-monospace font (where applicable)
-- `doom-big-font' -- used for `doom-big-font-mode'; use this for
-   presentations or streaming.
-- `doom-symbol-font' -- for symbols
-- `doom-serif-font' -- for the `fixed-pitch-serif' face
-
-See 'C-h v doom-font' for documentation and more examples of what they
-accept. For example:
-
-(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
-
-If you or Emacs can't find your font, use 'M-x describe-font' to look them
-up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
-refresh your font settings. If Emacs still can't find your font, it likely
-wasn't installed correctly. Font issues are rarely Doom issues!
-
-There are two ways to load a theme. Both assume the theme is installed and
-available. You can either set `doom-theme' or manually load a theme with the
-`load-theme' function. This is the default:
-
-#+BEGIN_SRC elisp
+;; --- config.org blocks ---
 
 (setq doom-theme 'doom-solarized-light
       doom-font (font-spec :family "Victor Mono" :size 16 )
       doom-big-font (font-spec :family "Victor Mono" :size 24))
 
-#+END_SRC
-
-* Emacs Line Numbers
-
-This determines the style of line numbers in effect. If set to `nil', line
-numbers are disabled. For relative line numbers, set this to `relative'.
-
-#+BEGIN_SRC elisp
-
 (setq display-line-numbers-type t)
-
-#+END_SRC
-
-* Project configuration
-
-Set the projectile search path. This allows projectile to automatically search
-for projects in the specified path.
-Add elixir project configuration.
-
-#+BEGIN_SRC elisp
 
 (setq
  projectile-project-search-path '("~/Workspace/"))
-
-
-#+END_SRC
-
-* Org and Org-roam configuration
-
-If you use `org' and don't want your org files in the default location below,
-change `org-directory'. It must be set before org loads!
-
-#+BEGIN_SRC elisp
 
 (after! org
 
@@ -286,7 +170,7 @@ change `org-directory'. It must be set before org loads!
          todo ""
          ((org-agenda-files
            '("~/Library/Mobile Documents/com~apple~CloudDocs/org/someday.org"))
-          (org-agenda-overriding-header "Someday Maybe")))))
+          (org-agenda-overriding-header "Someday Maybe"))))
 
 )
 
@@ -341,30 +225,12 @@ change `org-directory'. It must be set before org loads!
 
   (org-roam-db-autosync-mode))
 
-#+END_SRC
-
-#+RESULTS:
-: t
-
-* Org Auto Tangle
-
-Configure plugin to automatically tangle org files when saved
-
-#+BEGIN_SRC elisp
 
 (use-package! org-auto-tangle
   :defer t
   :hook (org-mode . org-auto-tangle-mode)
   :config
   (setq org-auto-tangle-default t))
-
-#+END_SRC
-
-* Github Copilot configuration
-
-Accept completion from copilot and fallback to company
-
-#+BEGIN_SRC elisp
 
 (use-package! copilot
   :hook (prog-mode . copilot-mode)
@@ -374,13 +240,6 @@ Accept completion from copilot and fallback to company
               ("C-TAB" . 'copilot-accept-completion-by-word)
               ("C-<tab>" . 'copilot-accept-completion-by-word)))
 
-#+END_SRC
-
-* Initial Window Size
-
-Set the initial window size for emacs
-
-#+BEGIN_SRC elisp
 ;; Set the initial frame size and position
 (setq initial-frame-alist
       '((width . 140)  ;; Width in characters
@@ -395,9 +254,16 @@ Set the initial window size for emacs
         (left . 50)
         (top . 50)))
 
-#+END_SRC
+;; --- packages.org blocks ---
 
-* Handle file system coding
+(package! copilot
+  :recipe (:host github :repo "zerolfx/copilot.el" :files ("*.el" "dist")))
 
-#+BEGIN_SRC elisp
-#+END_SRC
+(package! all-the-icons)
+(package! org-auto-tangle)
+(unpin! org-roam)
+(package! websocket)
+(package! simple-httpd)
+(package! f)
+(package! org-roam-ui)
+(package! org-modern) 

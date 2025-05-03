@@ -20,8 +20,6 @@ else
     install_asdf
 fi
 
-#!/bin/zsh
-
 function setup_asdf_plugins {
     echo "Setting up asdf plugins..."
 
