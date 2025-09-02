@@ -162,3 +162,20 @@ export JAVA_HOME=$(asdf where java)
 export PATH="$JAVA_HOME/bin:$PATH"
 export KERL_CONFIGURE_OPTIONS="--with-wx --with-odbc"
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
+# colorls configuration
+if command -v colorls &> /dev/null; then
+    # Load colorls tab completion if available
+    if gem which colorls &> /dev/null; then
+        COLORLS_TAB_COMPLETE="$(dirname $(gem which colorls))/tab_complete.sh"
+        if [ -f "$COLORLS_TAB_COMPLETE" ]; then
+            source "$COLORLS_TAB_COMPLETE"
+        fi
+    fi
+    
+    # colorls aliases
+    alias ls='colorls --light'
+    alias lc='colorls -lA --sd --light'
+    alias la='colorls -la --light'
+    alias ll='colorls -l --light'
+    alias tree='colorls --tree --light'
+fi
