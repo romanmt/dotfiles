@@ -1,0 +1,40 @@
+# Environment variables with Keeper-managed API keys
+# Rename this file to "dot_env.tmpl" and source it from your .zshrc
+
+# Development API Keys (stored securely in Keeper)
+export OPENAI_API_KEY="{{ (keeper "openai-api-key") }}"
+export GITHUB_TOKEN="{{ (keeper "github-personal-token") }}"
+export ANTHROPIC_API_KEY="{{ (keeper "anthropic-api-key") }}"
+
+# Database connections
+export DATABASE_URL="{{ (keeper "dev-database-url") }}"
+export REDIS_URL="{{ (keeper "dev-redis-url") }}"
+
+# Cloud provider credentials
+export AWS_ACCESS_KEY_ID="{{ (keeper "aws-access-key-id") }}"
+export AWS_SECRET_ACCESS_KEY="{{ (keeper "aws-secret-access-key") }}"
+export AWS_DEFAULT_REGION="us-west-2"
+
+# Third-party service API keys
+export STRIPE_PUBLISHABLE_KEY="{{ (keeper "stripe-publishable-key") }}"
+export STRIPE_SECRET_KEY="{{ (keeper "stripe-secret-key") }}"
+export SENDGRID_API_KEY="{{ (keeper "sendgrid-api-key") }}"
+
+# Monitoring and analytics
+export SENTRY_DSN="{{ (keeper "sentry-dsn") }}"
+export NEW_RELIC_LICENSE_KEY="{{ (keeper "newrelic-license-key") }}"
+
+# Development tools
+export SEMGREP_APP_TOKEN="{{ (keeper "semgrep-app-token") }}"
+export DOCKER_HUB_TOKEN="{{ (keeper "docker-hub-token") }}"
+
+# Work-specific variables (if applicable)
+{{- if eq .chezmoi.hostname "work-laptop" }}
+export COMPANY_API_KEY="{{ (keeper "company-api-key") }}"
+export COMPANY_DATABASE_URL="{{ (keeper "company-database-url") }}"
+{{- end }}
+
+# Local development overrides
+export NODE_ENV="development"
+export RAILS_ENV="development"
+export DEBUG="true"

@@ -8,16 +8,8 @@ fi
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
 
-# Path to your Oh My Zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time Oh My Zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
+# Using Powerlevel10k theme (installed via Homebrew)
 source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
-ZSH_THEME=""
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -74,46 +66,7 @@ ZSH_THEME=""
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-#plugins=(git)
-plugins=(
-  # Core functionality
-  git
-  gitfast
-  gh
-  
-  # Development tools
-  asdf
-  
-  # Languages (based on your setup)
-  python
-  pip
-  mix
-  ruby
-  
-  # Productivity
-  fzf
-  z
-  copypath
-  copyfile
-  extract
-  
-  # macOS integration
-  macos
-  brew
-  vscode
-  
-  # Enhanced shell experience
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  web-search
-)
-
-source $ZSH/oh-my-zsh.sh
+# Note: Oh My Zsh is not installed, using Powerlevel10k directly
 
 # User configuration
 
@@ -147,14 +100,51 @@ source $ZSH/oh-my-zsh.sh
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# ASDF version manager
+. $(brew --prefix asdf)/libexec/asdf.sh
 export PATH="$HOME/.asdf/shims:$PATH"
 
-source $(dirname $(gem which colorls))/tab_complete.sh
-alias ls='colorls --light'
-alias lc='colorls -lA --sd --light'
-
-# for erlang install
-export JAVA_HOME=$(asdf where java)
-export PATH="$JAVA_HOME/bin:$PATH"
+# Erlang/Elixir configuration
 export KERL_CONFIGURE_OPTIONS="--with-wx --with-odbc"
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# Java configuration (if java is installed via asdf)
+if asdf where java &>/dev/null; then
+    export JAVA_HOME=$(asdf where java)
+    export PATH="$JAVA_HOME/bin:$PATH"
+fi
+
+# Bun (if installed)
+if [ -d "$HOME/.bun" ]; then
+    export BUN_INSTALL="$HOME/.bun"
+    export PATH="$BUN_INSTALL/bin:$PATH"
+fi
+
+# Docker CLI completions (if Docker Desktop is installed)
+if [ -d "/Users/mattroman/.docker/completions" ]; then
+    fpath=(/Users/mattroman/.docker/completions $fpath)
+    autoload -Uz compinit
+    compinit
+fi
+
+# Semgrep configuration (if you use it, set SEMGREP_APP_TOKEN as environment variable)
+# if command -v semgrep &> /dev/null && [ -n "$SEMGREP_APP_TOKEN" ]; then
+#     semgrep login
+# fi
+
+# colorls configuration
+if command -v colorls &> /dev/null; then
+    # Load colorls tab completion if available
+    if gem which colorls &> /dev/null; then
+        COLORLS_TAB_COMPLETE="$(dirname $(gem which colorls))/tab_complete.sh"
+        if [ -f "$COLORLS_TAB_COMPLETE" ]; then
+            source "$COLORLS_TAB_COMPLETE"
+        fi
+    fi
+    
+    # colorls aliases
+    alias ls='colorls --light'
+    alias lc='colorls -lA --sd --light'
+    alias la='colorls -la --light'
+    alias ll='colorls -l --light'
+    alias tree='colorls --tree --light'
+fi

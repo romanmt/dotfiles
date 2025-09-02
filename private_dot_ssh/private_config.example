@@ -1,0 +1,49 @@
+# SSH configuration with Keeper-managed private keys
+# This file will be created as ~/.ssh/config with restricted permissions
+
+# Default settings
+Host *
+    AddKeysToAgent yes
+    UseKeychain yes
+    ServerAliveInterval 60
+    ServerAliveCountMax 3
+
+# Personal GitHub
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_personal
+    IdentitiesOnly yes
+
+# Work GitHub (if applicable)
+Host github-work
+    HostName github.com  
+    User git
+    IdentityFile ~/.ssh/id_ed25519_work
+    IdentitiesOnly yes
+
+# Production servers (using Keeper for SSH keys)
+Host production-server
+    HostName {{ (keeper "prod-server-hostname") }}
+    User {{ (keeper "prod-server-username") }}
+    IdentityFile ~/.ssh/id_rsa_production
+    StrictHostKeyChecking yes
+    
+# Development server
+Host dev-server
+    HostName {{ (keeper "dev-server-hostname") }}
+    User {{ (keeper "dev-server-username") }}
+    Port 22
+    IdentityFile ~/.ssh/id_ed25519_dev
+
+# Jump host configuration
+Host bastion
+    HostName {{ (keeper "bastion-hostname") }}
+    User {{ (keeper "bastion-username") }}
+    IdentityFile ~/.ssh/id_rsa_bastion
+    
+# Access internal servers through bastion
+Host internal-*
+    ProxyJump bastion
+    User {{ (keeper "internal-server-username") }}
+    IdentityFile ~/.ssh/id_ed25519_internal

@@ -1,0 +1,38 @@
+# Git configuration with Keeper-managed secrets
+# Rename this file to "dot_gitconfig.tmpl" to use it
+
+[user]
+    name = {{ .name }}
+    email = {{ .email }}
+
+[github]
+    user = {{ .github_username }}
+    # GitHub token stored securely in Keeper
+    token = {{ (keeper "github-personal-token") }}
+
+[core]
+    editor = {{ .editor }}
+    excludesfile = ~/.gitignore_global
+
+[pull]
+    rebase = true
+
+[push]
+    default = simple
+    autoSetupRemote = true
+
+[init]
+    defaultBranch = main
+
+[credential "https://github.com"]
+    helper = 
+    helper = !/opt/homebrew/bin/gh auth git-credential
+
+# Example of conditional configuration based on directory
+[includeIf "gitdir:~/Workspace/work/"]
+    path = ~/.gitconfig-work
+
+# Work git config would contain work-specific secrets from Keeper
+# [user]
+#     email = {{ (keeper "work-email") }}
+#     signingkey = {{ (keeper "work-gpg-key") }}
