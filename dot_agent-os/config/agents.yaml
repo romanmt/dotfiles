@@ -32,6 +32,14 @@ agents:
     model: "sonnet"
     color: "green"
     config_path: ".claude/agents/testing-specialist.md"
+    
+  ux-designer:
+    name: "ux-designer"
+    description: "Use proactively for interface improvements, user experience optimization, design system creation, accessibility audits, and user research insights. Specialist for creating consistent, delightful user experiences through thoughtful questioning and evidence-based design decisions. Expert in user research, interaction design, visual design, and accessibility."
+    tools: ["Read", "Grep", "Glob", "Edit", "MultiEdit", "Write", "WebFetch"]
+    model: "sonnet"
+    color: "pink"
+    config_path: ".claude/agents/ux-designer.md"
 
 # Agent usage guidelines
 guidelines:
@@ -40,6 +48,7 @@ guidelines:
     - Use devops-engineer for deployment, infrastructure, or CI/CD tasks
     - Use devsecops-engineer for security reviews and vulnerability assessments
     - Use testing-specialist when implementing tests or debugging test issues
+    - Use ux-designer for interface improvements, user experience optimization, and accessibility audits
     
   context_requirements:
     - Always provide relevant project context from CLAUDE.md

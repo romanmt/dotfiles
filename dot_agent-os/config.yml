@@ -32,6 +32,7 @@ project_types:
       deployment_tasks: "devops-engineer"
       security_tasks: "devsecops-engineer"
       testing_tasks: "testing-specialist"
+      ui_ux_tasks: "ux-designer"
     fallback_agent: "general-purpose"
 
   # type_a:
