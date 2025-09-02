@@ -1,0 +1,48 @@
+agents:
+  # Custom specialized agents for Gigbook project
+  
+  otp-architect:
+    name: "otp-architect"
+    description: "OTP and concurrent systems architect specializing in fault-tolerant Elixir/Erlang applications. Use proactively for designing supervision trees, implementing resilience patterns, optimizing GenServer architectures, handling distributed system challenges, debugging process communication issues, and building scalable concurrent systems."
+    tools: ["Read", "Grep", "Glob", "MultiEdit", "Edit", "Write"]
+    model: "sonnet"
+    color: "purple"
+    config_path: ".claude/agents/otp-architect.md"
+    
+  devops-engineer:
+    name: "devops-engineer"  
+    description: "Use proactively for fly.io deployment, GitHub Actions CI/CD, infrastructure management, deployment debugging, and production operations. Specialist for Phoenix/Elixir application deployment, release configuration, container optimization, and DevOps best practices."
+    tools: ["Read", "Grep", "Glob", "Edit", "MultiEdit", "Write", "Bash", "WebFetch"]
+    model: "sonnet"
+    color: "orange"
+    config_path: ".claude/agents/devops-engineer.md"
+    
+  devsecops-engineer:
+    name: "devsecops-engineer"
+    description: "Use proactively for security audits, vulnerability assessments, and implementing security best practices throughout the development lifecycle. Specialist for reviewing authentication, authorization, data protection, dependency security, and compliance requirements."
+    tools: ["Read", "Grep", "Glob", "Edit", "MultiEdit", "Bash", "WebFetch"] 
+    model: "sonnet"
+    color: "red"
+    config_path: ".claude/agents/devsecops-engineer.md"
+    
+  testing-specialist:
+    name: "testing-specialist"
+    description: "Use proactively for comprehensive testing strategies, test design, and quality assurance in Elixir/Phoenix applications. Specialist for implementing test pyramids, optimizing test suites, debugging flaky tests, and ensuring thorough test coverage. Expert in ExUnit, Mox, Wallaby, and testing best practices."
+    tools: ["Read", "Grep", "Glob", "Edit", "MultiEdit", "Bash"]
+    model: "sonnet"
+    color: "green"
+    config_path: ".claude/agents/testing-specialist.md"
+
+# Agent usage guidelines
+guidelines:
+  proactive_usage:
+    - Use otp-architect when designing concurrent systems or working with GenServers
+    - Use devops-engineer for deployment, infrastructure, or CI/CD tasks
+    - Use devsecops-engineer for security reviews and vulnerability assessments
+    - Use testing-specialist when implementing tests or debugging test issues
+    
+  context_requirements:
+    - Always provide relevant project context from CLAUDE.md
+    - Include specific technical requirements and constraints
+    - Provide current state information for informed recommendations
+    - Remember agents don't have conversation history

@@ -1,0 +1,54 @@
+# Agent OS Configuration
+
+# Refer to the official Agent OS documentation at:
+# https://buildermethods.com/agent-os
+
+agent_os_version: 1.4.1
+
+# Import custom agent definitions
+agents_config: "~/.agent-os/config/agents.yaml"
+
+agents:
+  claude_code:
+    enabled: true
+  cursor:
+    enabled: false
+
+project_types:
+  default:
+    instructions: ~/.agent-os/instructions
+    standards: ~/.agent-os/standards
+  
+  elixir_phoenix:
+    enabled: true
+    instructions: ~/.agent-os/instructions
+    standards: ~/.agent-os/standards
+    patterns:
+      - "mix.exs"
+      - "lib/**/*.ex"
+      - "config/**/*.exs"
+    auto_assign:
+      otp_tasks: "otp-architect"
+      deployment_tasks: "devops-engineer"
+      security_tasks: "devsecops-engineer"
+      testing_tasks: "testing-specialist"
+    fallback_agent: "general-purpose"
+
+  # type_a:
+  #   instructions: ~/.agent-os/project_types/type_a/instructions
+  #   standards: ~/.agent-os/project_types/type_a/standards
+
+  # type_b:
+  #   instructions: ~/.agent-os/project_types/type_b/instructions
+  #   standards: ~/.agent-os/project_types/type_b/standards
+
+default_project_type: default
+
+# Integration settings
+integrations:
+  claude_code:
+    enabled: true
+  task_system:
+    enabled: true
+  todo_tracking:
+    enabled: true
