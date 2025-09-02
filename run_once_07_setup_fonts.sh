@@ -66,4 +66,29 @@ else
     fi
 fi
 
+# Install Victor Mono Nerd Font (beautiful programming font with cursive italics)
+if brew list --cask font-victor-mono-nerd-font &>/dev/null; then
+    echo "✅ Victor Mono Nerd Font is already installed."
+else
+    echo "Installing Victor Mono Nerd Font..."
+    brew install --cask font-victor-mono-nerd-font
+    if [ $? -eq 0 ]; then
+        echo "✅ Victor Mono Nerd Font installation successful."
+        echo "✨ Victor Mono features cursive italics and programming ligatures!"
+        echo "📝 Configure your terminal/editor to use 'VictorMono Nerd Font' for the best experience."
+    else
+        echo "❌ Victor Mono Nerd Font installation failed."
+        exit 1
+    fi
+fi
+
 echo "✅ Fonts and Powerlevel10k setup complete"
+echo ""
+echo "🎨 Fonts installed:"
+echo "  • MesloLGS NF - Optimized for Powerlevel10k theme"
+echo "  • VictorMono Nerd Font - Beautiful cursive italics for coding"
+echo ""
+echo "📱 Next steps:"
+echo "  1. Configure your terminal to use one of these fonts"
+echo "  2. For best Powerlevel10k experience, use MesloLGS NF"
+echo "  3. For beautiful code editing, try VictorMono Nerd Font in your editor"
