@@ -150,8 +150,12 @@ source $ZSH/oh-my-zsh.sh
 export PATH="$HOME/.asdf/shims:$PATH"
 
 source $(dirname $(gem which colorls))/tab_complete.sh
-alias ls='colorls --light'
-alias lc='colorls -lA --sd --light'
+# colorls aliases for enhanced directory listings
+alias ls='colorls --light'                    # Colorful directory listing
+alias lc='colorls -lA --sd --light'           # Long format with directories first
+alias la='colorls -la --light'                # Show all files including hidden ones
+alias ll='colorls -l --light'                 # Detailed long listing
+alias tree='colorls --tree --light'           # Tree view of directory structure
 
 # for erlang install
 export JAVA_HOME=$(asdf where java)
