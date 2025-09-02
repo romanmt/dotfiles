@@ -26,14 +26,115 @@ project_types:
     patterns:
       - "mix.exs"
       - "lib/**/*.ex"
+      - "lib/**/*.eex"
+      - "lib/**/*.heex"
       - "config/**/*.exs"
+      - "priv/**/*.exs"
+      - "assets/**/*.js"
+      - "assets/**/*.css"
+      - ".github/workflows/**/*.yml"
+      - "fly.toml"
+      - "Dockerfile*"
     auto_assign:
+      # OTP and Concurrency
       otp_tasks: "otp-architect"
+      genserver_tasks: "otp-architect"
+      supervisor_tasks: "otp-architect"
+      concurrent_tasks: "otp-architect"
+      process_tasks: "otp-architect"
+      
+      # DevOps and Infrastructure  
       deployment_tasks: "devops-engineer"
+      ci_cd_tasks: "devops-engineer"
+      docker_tasks: "devops-engineer"
+      infrastructure_tasks: "devops-engineer"
+      release_tasks: "devops-engineer"
+      monitoring_tasks: "devops-engineer"
+      
+      # Security
       security_tasks: "devsecops-engineer"
+      auth_tasks: "devsecops-engineer"
+      authorization_tasks: "devsecops-engineer"
+      vulnerability_tasks: "devsecops-engineer"
+      compliance_tasks: "devsecops-engineer"
+      
+      # Testing
       testing_tasks: "testing-specialist"
+      test_tasks: "testing-specialist"
+      quality_assurance_tasks: "testing-specialist"
+      debugging_tasks: "testing-specialist"
+      
+      # UI/UX Design
       ui_ux_tasks: "ux-designer"
+      interface_tasks: "ux-designer"
+      design_tasks: "ux-designer"
+      accessibility_tasks: "ux-designer"
+      user_experience_tasks: "ux-designer"
+      template_tasks: "ux-designer"
+      
     fallback_agent: "general-purpose"
+    
+    # Keyword triggers for automatic agent suggestion
+    keyword_triggers:
+      otp-architect:
+        - "genserver"
+        - "supervisor"
+        - "otp"
+        - "process"
+        - "concurrent"
+        - "distributed"
+        - "registry"
+        - "dynamicsupervisor"
+        - "agent"
+        - "task"
+        
+      devops-engineer:
+        - "deploy"
+        - "fly.io"
+        - "docker"
+        - "ci/cd"
+        - "github actions"
+        - "release"
+        - "production"
+        - "monitoring"
+        - "infrastructure"
+        - "container"
+        
+      devsecops-engineer:
+        - "security"
+        - "auth"
+        - "authorization"
+        - "authentication"
+        - "vulnerability"
+        - "compliance"
+        - "csrf"
+        - "xss"
+        - "ssl"
+        - "encryption"
+        
+      testing-specialist:
+        - "test"
+        - "testing"
+        - "exunit"
+        - "spec"
+        - "assert"
+        - "mock"
+        - "wallaby"
+        - "property"
+        - "integration test"
+        - "unit test"
+        
+      ux-designer:
+        - "ui"
+        - "ux"
+        - "design"
+        - "interface"
+        - "user experience"
+        - "accessibility"
+        - "responsive"
+        - "template"
+        - "css"
+        - "html"
 
   # type_a:
   #   instructions: ~/.agent-os/project_types/type_a/instructions

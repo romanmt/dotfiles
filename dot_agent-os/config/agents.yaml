@@ -44,14 +44,108 @@ agents:
 # Agent usage guidelines
 guidelines:
   proactive_usage:
-    - Use otp-architect when designing concurrent systems or working with GenServers
-    - Use devops-engineer for deployment, infrastructure, or CI/CD tasks
-    - Use devsecops-engineer for security reviews and vulnerability assessments
-    - Use testing-specialist when implementing tests or debugging test issues
-    - Use ux-designer for interface improvements, user experience optimization, and accessibility audits
+    # OTP Architect - Use for:
+    - GenServer design and implementation
+    - Supervision tree architecture
+    - Process communication and registry patterns  
+    - Concurrent system design
+    - Distributed system challenges
+    - Performance optimization for BEAM
+    - Fault tolerance and recovery patterns
     
+    # DevOps Engineer - Use for:
+    - Fly.io deployment configuration and troubleshooting
+    - GitHub Actions CI/CD pipeline setup
+    - Docker containerization and optimization
+    - Infrastructure as code (Terraform, etc.)
+    - Production monitoring and alerting
+    - Release management and rollback strategies
+    - Environment configuration and secrets management
+    
+    # DevSecOps Engineer - Use for:
+    - Security architecture reviews
+    - Authentication and authorization implementation
+    - Vulnerability assessments and penetration testing
+    - Compliance audits (SOC2, GDPR, etc.)
+    - Dependency security scanning
+    - Data protection and encryption strategies
+    - Security incident response planning
+    
+    # Testing Specialist - Use for:
+    - Test strategy and pyramid design
+    - Unit test implementation with ExUnit
+    - Integration testing with Phoenix
+    - End-to-end testing with Wallaby
+    - Property-based testing with StreamData
+    - Test coverage analysis and improvement
+    - Mocking strategies with Mox
+    - Performance and load testing
+    
+    # UX Designer - Use for:
+    - User interface design and optimization
+    - User experience research and journey mapping
+    - Accessibility audits and WCAG compliance
+    - Design system creation and maintenance
+    - Responsive design implementation
+    - User testing and feedback analysis
+    - Information architecture improvements
+    - Visual design and branding consistency
+  
+  file_patterns:
+    otp-architect:
+      - "**/gen_server.ex"
+      - "**/supervisor.ex"
+      - "**/application.ex"
+      - "**/registry.ex"
+      - Files containing "GenServer", "Supervisor", "Agent", "Task"
+      
+    devops-engineer:
+      - "fly.toml"
+      - "Dockerfile*"
+      - ".github/workflows/**"
+      - "docker-compose.yml"
+      - "**/release.ex"
+      - "priv/repo/migrations/**"
+      
+    devsecops-engineer:
+      - "**/auth*.ex"
+      - "**/security*.ex"
+      - "**/plugs/**"
+      - "config/runtime.exs"
+      - Files containing authentication, authorization patterns
+      
+    testing-specialist:
+      - "test/**/*.exs"
+      - "*_test.exs"
+      - "test_helper.exs"
+      - Files in test directories
+      
+    ux-designer:
+      - "lib/**/*.eex"
+      - "lib/**/*.heex"
+      - "assets/**/*.css"
+      - "assets/**/*.scss"
+      - "priv/static/**"
+  
   context_requirements:
-    - Always provide relevant project context from CLAUDE.md
+    - Always provide relevant project context from CLAUDE.md or README.md
     - Include specific technical requirements and constraints
     - Provide current state information for informed recommendations
-    - Remember agents don't have conversation history
+    - Share relevant error messages or logs when debugging
+    - Include user feedback or metrics when available
+    - Specify target environment (dev, staging, production)
+    - Remember agents don't have conversation history - be comprehensive
+    
+  collaboration_patterns:
+    # Cross-agent collaboration scenarios
+    otp_and_testing:
+      - "Use otp-architect for GenServer design, then testing-specialist for comprehensive test coverage"
+    
+    security_and_devops:
+      - "Use devsecops-engineer for security review, then devops-engineer for secure deployment"
+      
+    ux_and_testing:
+      - "Use ux-designer for interface design, then testing-specialist for user acceptance testing"
+      
+    architecture_and_performance:
+      - "Use otp-architect for system design, then devops-engineer for production optimization"
