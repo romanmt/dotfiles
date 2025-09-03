@@ -1,0 +1,50 @@
+# Designer Solarized Light Color Scheme for colorls
+# Carefully chosen colors for visual hierarchy and aesthetic appeal
+# Optimized for Solarized Light's cream (#FDF6E3) background
+
+# Main Colors - Creating visual hierarchy with sophisticated tones
+unrecognized_file: darkgray        # Subtle for unknown files (less visual noise)
+recognized_file:   navyblue        # Rich navy for important recognized files
+executable_file:   forestgreen     # Strong green for executables (action-oriented)
+dir:               steelblue       # Professional blue-gray for directories
+
+# Link - Distinctive but not jarring
+dead_link: indianred            # Muted red for broken links (warning without alarm)
+link:      darkcyan             # Rich cyan for symlinks (connection indicator)
+
+# Special files - Unified warm tone for system files
+socket:    darkgoldenrod        # Warm gold for special files
+blockdev:  darkgoldenrod        # Consistent warm tone
+chardev:   darkgoldenrod        # Unified appearance
+
+# Access Modes - Semantic color coding
+write:     crimson              # Strong red for write (danger/power)
+read:      royalblue            # Trust-inspiring blue for read
+exec:      darkgreen            # Confident green for execute
+no_access: dimgray              # Muted for no access
+
+# Age - Subtle gradient from fresh to old
+day_old:     sienna             # Warm brown for aged files
+hour_old:    darkgoldenrod      # Golden for recent files
+no_modifier: darkslategray      # Neutral for current files
+
+# File Size - Visual weight matches actual weight
+file_large:  maroon             # Deep red for large files (attention)
+file_medium: darkgoldenrod      # Balanced gold for medium files
+file_small:  darkslategray      # Subtle for small files
+
+# Interface elements - Clean and professional
+report: darkslategray           # Professional gray for headers
+user:   mediumblue              # Trustworthy blue for user info
+tree:   lightslategray          # Subtle for tree structure
+empty:  darkkhaki               # Muted indicator for empty
+error:  darkred                 # Clear but not alarming red
+normal: darkslategray           # Readable neutral
+inode: lightslategray           # Very subtle for inode numbers
+
+# Git - Semantic and visually pleasing
+addition:     mediumseagreen     # Fresh green for additions
+modification: goldenrod         # Warm gold for modifications
+deletion:     indianred          # Muted red for deletions
+untracked:    mediumpurple       # Purple for untracked (unknown state)
+unchanged:    slateblue          # Calm blue for unchanged files
