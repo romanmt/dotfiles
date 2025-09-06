@@ -32,6 +32,34 @@ ELSE:
 - Keep files focused on a single responsibility
 - Group related functionality together
 - Use consistent naming conventions
+
+### Migrations
+- Migrations should always include and up and a down function
+- never use models in migrations, stick to SQL
+
+### Structure
+- Use onion architecture. 
+- Separate business logic from other code
+- Implement business logic as pure functions with no sideffects
+- Avoid mutable state
+
+### Performance
+- Write code that takes advantage of mutlicore architecture
+- Leverage concurrent programming
+- Make sure that code is efficient
+
+### Storage
+- Where possible, manage data in memory using genservers and write to the database using a debounced scheme. 
+- The database should be primarily used for state restore after server restarts or crashes. 
+
+### Stability
+- Leverage OPT features like supervisors to create product stability
+
+### Testing
+- Add tests for every feature.
+- Maintain a healthy test pyramid. 70% unit tests, 20% integration tests, 10% e2e tests.
+
+
 </conditional-block>
 
 <conditional-block context-check="dependencies" task-condition="choosing-external-library">

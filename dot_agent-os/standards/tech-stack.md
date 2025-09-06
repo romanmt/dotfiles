@@ -4,31 +4,30 @@
 
 Global tech stack defaults for Agent OS projects, overridable in project-specific `.agent-os/product/tech-stack.md`.
 
-  - App Framework: Phoenix LiveView 1.7+
-  - Language: Elixir 1.14+
-  - Primary Database: PostgreSQL
-  - ORM: Ecto
-  - JavaScript Framework: Vanilla JS with Phoenix LiveView
-  - Build Tool: esbuild
-  - Import Strategy: ES6 modules
-  - Package Manager: npm
-  - Node Version: Not specified (using npm for assets)
-  - CSS Framework: TailwindCSS
-  - UI Components: ag-grid-community for tables
-  - UI Installation: Via npm in assets directory
-  - Font Provider: Default system fonts
-  - Font Loading: Browser default
-  - Icons: Hero Icons (Phoenix default)
-  - Application Hosting: fly.io
-  - Hosting Region: Auto-selected by fly.io
-  - Database Hosting: fly.io PostgreSQL
-  - Database Backups: fly.io managed
-  - Asset Storage: Local file system
-  - CDN: None (served directly)
-  - Asset Access: Public via Phoenix static
-  - CI/CD Platform: GitHub Actions
-  - CI/CD Trigger: Push to main branch
-  - Tests: Run before deployment (mix test)
-  - Production Environment: main branch
-  - Staging Environment: Not configured
-  - Runtime Management: asdf
+- App Framework: Ruby on Rails 8.0+
+- Language: Ruby 3.2+
+- Primary Database: PostgreSQL 17+
+- ORM: Active Record
+- JavaScript Framework: React latest stable
+- Build Tool: Vite
+- Import Strategy: Node.js modules
+- Package Manager: npm
+- Node Version: 22 LTS
+- CSS Framework: TailwindCSS 4.0+
+- UI Components: Instrumental Components latest
+- UI Installation: Via development gems group
+- Font Provider: Google Fonts
+- Font Loading: Self-hosted for performance
+- Icons: Lucide React components
+- Application Hosting: Digital Ocean App Platform/Droplets
+- Hosting Region: Primary region based on user base
+- Database Hosting: Digital Ocean Managed PostgreSQL
+- Database Backups: Daily automated
+- Asset Storage: Amazon S3
+- CDN: CloudFront
+- Asset Access: Private with signed URLs
+- CI/CD Platform: GitHub Actions
+- CI/CD Trigger: Push to main/staging branches
+- Tests: Run before deployment
+- Production Environment: main branch
+- Staging Environment: staging branch

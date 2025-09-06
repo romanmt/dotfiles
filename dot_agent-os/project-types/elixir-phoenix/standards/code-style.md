@@ -18,15 +18,20 @@ ELSE:
 - Maintain consistent indentation throughout files
 - Align nested structures for readability
 
-### Naming Conventions
-- **Methods and Variables**: Use snake_case (e.g., `user_profile`, `calculate_total`)
-- **Classes and Modules**: Use PascalCase (e.g., `UserProfile`, `PaymentProcessor`)
-- **Constants**: Use UPPER_SNAKE_CASE (e.g., `MAX_RETRY_COUNT`)
+## Naming Conventions
+  - **Functions and Variables**: Use snake_case (e.g., `user_profile`, `calculate_total`)
+  - **Modules**: Use PascalCase (e.g., `UserProfile`, `PaymentProcessor`)
+  - **Module Attributes/Constants**: Use @snake_case (e.g., `@max_retry_count`, `@default_timeout`)
 
-### String Formatting
-- Use single quotes for strings: `'Hello World'`
-- Use double quotes only when interpolation is needed
-- Use template literals for multi-line strings or complex interpolation
+  ### String Formatting
+  - Use double quotes for strings: `"Hello World"`
+  - String interpolation with #{}: `"Hello #{name}"`
+  - Use triple quotes for multi-line strings: `"""
+    Multi-line
+    string here
+    """`
+  - Use ~S sigil for strings with quotes: `~S(String with "quotes")`
+  - Use charlist with single quotes only when needed: `'charlist'` (rarely used)
 
 ### Code Comments
 - Add brief comments above non-obvious business logic
