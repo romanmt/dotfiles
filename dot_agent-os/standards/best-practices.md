@@ -34,6 +34,11 @@ ELSE:
 - Use consistent naming conventions
 </conditional-block>
 
+### UX Design
+- Design features around user flows unless otherwise specified
+- Seek to design intuitive features based on how the user works
+- Use jobs to be done thinking to develop features that are focused on solving problems.
+
 <conditional-block context-check="dependencies" task-condition="choosing-external-library">
 IF current task involves choosing an external library:
   IF Dependencies section already read in current context:
