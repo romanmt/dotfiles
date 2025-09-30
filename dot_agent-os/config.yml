@@ -26,6 +26,16 @@ project_types:
     instructions: ~/.agent-os/instructions
     standards: ~/.agent-os/project-types/react-ts-java/standards
 
+  java_rest:
+    enabled: true
+    instructions: ~/.agent-os/instructions
+    standards: ~/.agent-os/project-types/java-rest/standards
+
+  react_ts:
+    enabled: true
+    instructions: ~/.agent-os/instructions
+    standards: ~/.agent-os/project-types/react-ts/standards
+
   # type_a:
   #   instructions: ~/.agent-os/project_types/type_a/instructions
   #   standards: ~/.agent-os/project_types/type_a/standards

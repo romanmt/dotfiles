@@ -32,12 +32,16 @@ ELSE:
 - Keep files focused on a single responsibility
 - Group related functionality together
 - Use consistent naming conventions
-</conditional-block>
+
+### Security
+- Always test for OWASP top 10
 
 ### UX Design
 - Design features around user flows unless otherwise specified
 - Seek to design intuitive features based on how the user works
 - Use jobs to be done thinking to develop features that are focused on solving problems.
+
+</conditional-block>
 
 <conditional-block context-check="dependencies" task-condition="choosing-external-library">
 IF current task involves choosing an external library:

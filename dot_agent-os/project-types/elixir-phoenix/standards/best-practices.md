@@ -58,8 +58,19 @@ ELSE:
 ### Testing
 - Add tests for every feature.
 - Maintain a healthy test pyramid. 70% unit tests, 20% integration tests, 10% e2e tests.
+- tests should be runnable with simple commands.
+  - test.unit (runs unit tests only, does not need a database)
+  - test.integration (tests integration only needs a database)
+  - test.e2e (tests end to end tests, requires database and wallaby server)
+  - test.all (runs all tests, requires databaes and wallaby server)
 
+### Security
+- Always test for OWASP top 10.
 
+### UX Design
+- Design features around user flows unless otherwise specified
+- Seek to design intuitive features based on how the user works
+- Use jobs to be done thinking to develop features that are focused on solving problems.
 </conditional-block>
 
 <conditional-block context-check="dependencies" task-condition="choosing-external-library">
