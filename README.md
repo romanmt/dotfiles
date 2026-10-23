@@ -22,7 +22,6 @@ This README is for me and for AI agents. Agents: read [Rules for AI agents](#rul
 | Fonts | MesloLGS Nerd Font, VictorMono Nerd Font | `run_once_07_setup_fonts.sh` |
 | Directory listings | colorls, with `ls`, `lc`, `la`, `ll` and `tree` aliases | `run_once_06_setup_colorls.sh`, `dot_zshrc`, `dot_config/colorls/` |
 | Secrets tooling | Keeper Commander (password manager CLI), OpenBao `bao` (work secrets CLI) | `run_once_08_setup_secrets_tools.sh` |
-| SSH | Example config only | `private_dot_ssh/private_config.example` |
 | chezmoi itself | Config: source dir, VS Code as editor, diff and merge tool | `.chezmoi.toml.tmpl` |
 
 ### Files that are not managed
@@ -85,7 +84,7 @@ These rules apply to any agent (Claude Code or another) that changes this repo o
 
 ### How the repo works
 
-- **This repo is the source of truth.** A file in `$HOME` is generated from its source here: `~/.zshrc` comes from `dot_zshrc`, `~/.config/x` from `dot_config/x`, `~/.ssh/config` from `private_dot_ssh/private_config`.
+- **This repo is the source of truth.** A file in `$HOME` is generated from its source here: `~/.zshrc` comes from `dot_zshrc`, `~/.config/x` from `dot_config/x`, and a `private_` prefix makes the target readable only by me.
 - **Change the source, not the target.** Edit the file in `~/Workspace/dotfiles`, then apply it. If you have to change a file in `$HOME` directly, bring it back with `chezmoi re-add <path>` in the same session.
 - **Setup scripts install things. They never edit managed files.** A `run_once_*` script must not append to `~/.zshrc` (or any other managed file), and must not call `chezmoi add`. Shell config goes in `dot_zshrc`. Breaking this rule is what duplicated the colorls and asdf blocks before.
 - **Scripts are self-contained and idempotent.** chezmoi runs each one on its own, so define any helper inside the script that uses it. Check before installing, and exit non-zero with a clear message on failure.
@@ -105,6 +104,7 @@ Powerlevel10k's instant prompt prints a large warning if anything writes to the 
 
 - **No secrets, ever.** No tokens, passwords or keys in any file, not even in examples or comments. Keeper is my personal password manager and OpenBao is the work secrets manager, and **neither is wired into chezmoi templates**. Do not add `keeper`, `bao` or `vault` template functions.
 - **No work-internal details.** Internal hostnames (`*.kwi.com`), internal paths, IPs and work env vars go in `~/.zshrc.local`, not in this repo.
+- **`~/.ssh` is not managed.** Never add SSH keys or `~/.ssh/config` here. If a shared SSH config is ever wanted, keep work hosts in an unmanaged file pulled in with `Include ~/.ssh/config.local`.
 
 ### Making a change
 
