@@ -20,145 +20,46 @@ if ! check_command_installed "brew"; then
     exit 1
 fi
 
-# Function to install asdf
-function install_asdf() {
-    echo "Installing asdf..."
-    brew install asdf
-    if [ $? -eq 0 ]; then
-        echo "✅ asdf installation successful."
-        
-        # Add asdf to shell configuration
-        ASDF_SH="$(brew --prefix asdf)/libexec/asdf.sh"
-        if [ -f "$ASDF_SH" ]; then
-            if ! grep -q "asdf.sh" ~/.zshrc; then
-                echo "" >> ~/.zshrc
-                echo "# ASDF version manager" >> ~/.zshrc
-                echo ". \"$ASDF_SH\"" >> ~/.zshrc
-                echo "Added asdf to ~/.zshrc"
-            fi
-            # Load asdf for this session
-            . "$ASDF_SH"
-        fi
-    else
-        echo "❌ asdf installation failed."
-        exit 1
-    fi
-}
-
-# Function to setup asdf plugins and versions
-function setup_asdf_plugins() {
-    echo "Setting up asdf plugins and versions..."
-    
-    # Ensure asdf is loaded
-    if ! check_command_installed "asdf"; then
-        ASDF_SH="$(brew --prefix asdf)/libexec/asdf.sh"
-        if [ -f "$ASDF_SH" ]; then
-            . "$ASDF_SH"
-        else
-            echo "❌ Could not load asdf"
-            exit 1
-        fi
-    fi
-
-    # Add Java plugin (required for Erlang compilation)
-    echo "Setting up Java..."
-    if ! asdf plugin list 2>/dev/null | grep -q "java"; then
-        echo "Adding Java plugin..."
-        asdf plugin add java https://github.com/halcyon/asdf-java.git
-    fi
-    
-    if ! asdf list java 2>/dev/null | grep -q "temurin-21"; then
-        echo "Installing Java (Temurin 21)..."
-        asdf install java temurin-21.0.5+11.0.LTS
-    fi
-    
-    # Add Erlang plugin
-    echo "Setting up Erlang..."
-    if ! asdf plugin list 2>/dev/null | grep -q "erlang"; then
-        echo "Adding Erlang plugin..."
-        asdf plugin add erlang https://github.com/asdf-vm/asdf-erlang.git
-    fi
-    
-    if ! asdf list erlang 2>/dev/null | grep -q "27.2.1"; then
-        echo "Installing Erlang 27.2.1..."
-        asdf install erlang 27.2.1
-    fi
-    
-    # Add Elixir plugin
-    echo "Setting up Elixir..."
-    if ! asdf plugin list 2>/dev/null | grep -q "elixir"; then
-        echo "Adding Elixir plugin..."
-        asdf plugin add elixir https://github.com/asdf-vm/asdf-elixir.git
-    fi
-    
-    if ! asdf list elixir 2>/dev/null | grep -q "1.18-otp-27"; then
-        echo "Installing Elixir 1.18-otp-27..."
-        asdf install elixir 1.18-otp-27
-    fi
-    
-    # Add Ruby plugin and install version
-    echo "Setting up Ruby..."
-    if ! asdf plugin list 2>/dev/null | grep -q "ruby"; then
-        echo "Adding Ruby plugin..."
-        asdf plugin add ruby
-    fi
-    
-    if ! asdf list ruby 2>/dev/null | grep -q "3.3.3"; then
-        echo "Installing Ruby 3.3.3..."
-        asdf install ruby 3.3.3
-    fi
-    
-    # Add Node.js plugin and install version  
-    echo "Setting up Node.js..."
-    if ! asdf plugin list 2>/dev/null | grep -q "nodejs"; then
-        echo "Adding Node.js plugin..."
-        asdf plugin add nodejs
-    fi
-    
-    if ! asdf list nodejs 2>/dev/null | grep -q "22.3.0"; then
-        echo "Installing Node.js 22.3.0..."
-        asdf install nodejs 22.3.0
-    fi
-    
-    # Add additional plugins you might have
-    echo "Setting up Python..."
-    if ! asdf plugin list 2>/dev/null | grep -q "python"; then
-        echo "Adding Python plugin..."
-        asdf plugin add python
-    fi
-    
-    echo "Setting up Pandoc..."
-    if ! asdf plugin list 2>/dev/null | grep -q "pandoc"; then
-        echo "Adding Pandoc plugin..."
-        asdf plugin add pandoc
-    fi
-    
-    echo "Setting up Chezmoi..."
-    if ! asdf plugin list 2>/dev/null | grep -q "chezmoi"; then
-        echo "Adding Chezmoi plugin..."
-        asdf plugin add chezmoi
-    fi
-
-    # Set asdf global versions (based on .tool-versions managed by Chezmoi)
-    echo "Setting global versions from .tool-versions file..."
-    if [ -f ~/.tool-versions ]; then
-        asdf global ruby 3.3.3 2>/dev/null || true
-        asdf global nodejs 22.3.0 2>/dev/null || true
-        asdf global java temurin-21.0.5+11.0.LTS 2>/dev/null || true
-        asdf global chezmoi 2.58.0 2>/dev/null || true
-    fi
-    
-    echo "✅ asdf plugins and versions setup complete."
-}
-
-# Check if asdf is installed
+# Install asdf. Shell integration (shims on PATH) comes from the Oh My Zsh
+# asdf plugin in dot_zshrc, so this script never edits ~/.zshrc.
 if check_command_installed "asdf"; then
     echo "✅ asdf is already installed, skipping installation."
 else
-    install_asdf
+    echo "Installing asdf..."
+    if ! brew install asdf; then
+        echo "❌ asdf installation failed."
+        exit 1
+    fi
+    echo "✅ asdf installation successful."
 fi
 
-# Set up asdf plugins and versions
-setup_asdf_plugins
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# Plugin source URLs for tools that are not in the default asdf plugin index
+typeset -A PLUGIN_URLS
+PLUGIN_URLS[java]="https://github.com/halcyon/asdf-java.git"
+PLUGIN_URLS[erlang]="https://github.com/asdf-vm/asdf-erlang.git"
+PLUGIN_URLS[elixir]="https://github.com/asdf-vm/asdf-elixir.git"
+
+# ~/.tool-versions (managed by chezmoi as dot_tool-versions) is the single
+# source of truth for versions. Add a plugin for every tool it lists, then
+# install the pinned versions.
+TOOL_VERSIONS="$HOME/.tool-versions"
+if [ ! -f "$TOOL_VERSIONS" ]; then
+    echo "❌ $TOOL_VERSIONS not found. Run 'chezmoi apply' so it is created first."
+    exit 1
+fi
+
+for tool in $(awk '!/^#/ && NF {print $1}' "$TOOL_VERSIONS"); do
+    if asdf plugin list 2>/dev/null | grep -qx "$tool"; then
+        echo "✅ asdf plugin $tool already added."
+    else
+        echo "Adding asdf plugin $tool..."
+        asdf plugin add "$tool" ${PLUGIN_URLS[$tool]}
+    fi
+done
+
+echo "Installing versions pinned in $TOOL_VERSIONS..."
+(cd "$HOME" && asdf install)
 
 echo "✅ ASDF setup complete"

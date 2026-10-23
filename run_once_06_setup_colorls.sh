@@ -48,53 +48,13 @@ else
     install_colorls
 fi
 
-# Add colorls configuration to .zshrc if not already present
-echo "Adding colorls configuration to .zshrc..."
-
-ZSHRC_FILE="$HOME/.zshrc"
-
-# Create backup of .zshrc
-cp "$ZSHRC_FILE" "$ZSHRC_FILE.backup.$(date +%Y%m%d_%H%M%S)"
-
-# Add colorls configuration section if not present
-if ! grep -q "# colorls configuration" "$ZSHRC_FILE"; then
-    cat >> "$ZSHRC_FILE" << 'EOF'
-
-# colorls configuration
-if command -v colorls &> /dev/null; then
-    # Load colorls tab completion if available
-    if gem which colorls &> /dev/null; then
-        COLORLS_TAB_COMPLETE="$(dirname $(gem which colorls))/tab_complete.sh"
-        if [ -f "$COLORLS_TAB_COMPLETE" ]; then
-            source "$COLORLS_TAB_COMPLETE"
-        fi
-    fi
-    
-    # colorls aliases
-    alias ls='colorls --light'
-    alias lc='colorls -lA --sd --light'
-    alias la='colorls -la --light'
-    alias ll='colorls -l --light'
-    alias tree='colorls --tree --light'
-fi
-EOF
-    
-    echo "✅ Added colorls configuration to .zshrc"
-else
-    echo "✅ colorls configuration already exists in .zshrc"
-fi
-
-# Update chezmoi source to include the modified .zshrc
-if command -v chezmoi &> /dev/null; then
-    echo "Updating chezmoi source with modified .zshrc..."
-    chezmoi add ~/.zshrc
-    echo "✅ Updated chezmoi source"
-fi
+# The colorls aliases and tab completion live in dot_zshrc, and the color
+# schemes in dot_config/colorls/. This script only installs the gem.
 
 echo "✅ colorls setup complete"
 echo ""
 echo "🎨 Available colorls aliases:"
-echo "  ls  - colorls with light theme"
+echo "  ls  - colorls with dark theme"
 echo "  lc  - long listing with directories first"
 echo "  la  - show all files including hidden"
 echo "  ll  - long listing format"

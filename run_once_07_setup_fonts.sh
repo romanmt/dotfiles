@@ -25,17 +25,10 @@ echo "Installing Powerlevel10k..."
 if brew list powerlevel10k &>/dev/null; then
     echo "✅ Powerlevel10k is already installed."
 else
-    brew install romkatv/powerlevel10k/powerlevel10k
+    # dot_zshrc already sources the theme, so this script never edits ~/.zshrc
+    brew install powerlevel10k
     if [ $? -eq 0 ]; then
         echo "✅ Powerlevel10k installation successful."
-        
-        # Add to zshrc if not already there
-        if ! grep -q "powerlevel10k" ~/.zshrc; then
-            echo "" >> ~/.zshrc
-            echo "# Powerlevel10k theme" >> ~/.zshrc
-            echo "source $(brew --prefix)/share/powerlevel10k/powerlevel10k.zsh-theme" >> ~/.zshrc
-            echo "Added Powerlevel10k to ~/.zshrc"
-        fi
     else
         echo "❌ Powerlevel10k installation failed."
         exit 1
@@ -45,11 +38,7 @@ fi
 # Install Nerd Fonts
 echo "Setting up Nerd Fonts..."
 
-# Tap the Homebrew Fonts Cask if not already tapped
-if ! brew tap | grep -q "homebrew/cask-fonts"; then
-    echo "Tapping homebrew/cask-fonts..."
-    brew tap homebrew/cask-fonts
-fi
+# Nerd Font casks are in the main Homebrew cask repo (homebrew/cask-fonts is retired)
 
 # Install Meslo LG Nerd Font (recommended for Powerlevel10k)
 if brew list --cask font-meslo-lg-nerd-font &>/dev/null; then

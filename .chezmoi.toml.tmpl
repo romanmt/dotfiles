@@ -1,0 +1,74 @@
+# Chezmoi configuration file
+# This enables templating and conditional configurations
+
+# Where your dotfiles are stored. Top-level keys must come before the first
+# [section] header, otherwise TOML assigns them to that section.
+sourceDir = "~/Workspace/dotfiles"
+
+[data]
+    # Personal information
+    name = "Matt Roman"
+    email = "romanmt@gmail.com"
+    github_username = "romanmt"
+    
+    # Development preferences
+    editor = "code"
+    shell = "zsh"
+    terminal = "iterm2"
+    
+    # Font preferences (matching your current setup)
+    font_family = "Victor Mono"
+    font_size = 14
+    
+    # Theme preferences (matching your current setup)
+    theme_dark = "Solarized Dark"
+    theme_light = "Solarized Light"
+    
+    # Development directories
+    workspace_dir = "~/Workspace"
+    projects_dir = "~/Workspace"
+    
+    # Language versions (from your current .tool-versions)
+    ruby_version = "3.3.3"
+    node_version = "22.3.0"
+
+[data.homebrew]
+    # Homebrew paths for different architectures
+    intel_prefix = "/usr/local"
+    apple_silicon_prefix = "/opt/homebrew"
+
+[data.paths]
+    # Common paths that might vary by system
+    config_dir = "~/.config"
+    local_bin = "~/.local/bin"
+
+[merge]
+    # Use VS Code for merge conflicts (matching your setup)
+    command = "code"
+    args = ["--wait", "{{ "{{ .Destination }}" }}"]
+
+[diff]
+    # Use VS Code for diffs (matching your setup)
+    command = "code"
+    args = ["--wait", "--diff", "{{ "{{ .Destination }}" }}", "{{ "{{ .Target }}" }}"]
+
+[edit]
+    # Use VS Code as the default editor
+    command = "code"
+    args = ["--wait"]
+
+# Template options
+[template]
+    # Template options for conditional configs
+    options = ["missingkey=error"]
+
+# Keeper Security Manager integration for secrets
+[keeper]
+    command = "keeper"
+    # Use Keeper CLI to retrieve passwords/secrets  
+    args = ["get", "--format=password"]
+
+# Interpret templates
+[interpreters.ps1]
+    command = "pwsh"
+    args = ["-NoLogo"]

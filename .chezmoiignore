@@ -1,0 +1,4 @@
+# Repo-only files. chezmoi must not copy these into $HOME.
+README.md
+CLAUDE.md
+docs

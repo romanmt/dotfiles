@@ -1,190 +1,146 @@
-# 🏠 Personal Dotfiles
+# Dotfiles
 
-A comprehensive development environment setup using [chezmoi](https://chezmoi.io/) to manage dotfiles and automate system configuration.
+My macOS development environment, managed with [chezmoi](https://chezmoi.io/).
 
-## ✨ What's Included
+- **Repo:** `github.com/romanmt/dotfiles` (**public**)
+- **Local source:** `~/Workspace/dotfiles` (set by `sourceDir` in `.chezmoi.toml.tmpl`)
+- **Target:** `$HOME`
 
-### 🐚 Shell Configuration
-- **[Oh My Zsh](https://ohmyz.sh/)** with 14 carefully selected plugins
-- **[Powerlevel10k](https://github.com/romkatv/powerlevel10k)** theme for a beautiful and informative prompt
-- **Enhanced plugins** for productivity and development workflow
-
-### 🛠 Development Tools
-- **[ASDF](https://asdf-vm.com/)** version manager (Ruby 3.3.3, Node.js 22.3.0)
-- **[Doom Emacs](https://github.com/doomemacs/doomemacs)** configuration
-- **Git integration** with enhanced Git workflows
-- **[colorls](https://github.com/athityakumar/colorls)** for beautiful directory listings
-
-### 🖥 Applications & Tools
-- **iTerm2** terminal emulator
-- **Homebrew** package manager
-- **Graphviz** and **Aspell** for documentation and spell checking
-- **Docker CLI** completions (when Docker Desktop is installed)
-- **VS Code** integration
-
-## 🚀 Quick Start
-
-### First-time setup on a new machine:
-
-```bash
-# Install chezmoi
-brew install chezmoi
-
-# Initialize and apply dotfiles (replace 'mattroman' with your GitHub username)
-chezmoi init --apply mattroman
-
-# Restart your terminal or source your new shell configuration
-source ~/.zshrc
-```
-
-That's it! The setup scripts will automatically:
-- Install Oh My Zsh and custom plugins
-- Set up ASDF with Ruby and Node.js
-- Install development tools and applications
-- Configure your shell with all the plugins and aliases
-
-## 🔧 Oh My Zsh Plugin Configuration
-
-Your shell comes pre-configured with these plugins:
-
-### Core Development
-- **`git`** - Git aliases and functions
-- **`gitfast`** - Enhanced Git tab completion
-- **`gh`** - GitHub CLI integration
-- **`asdf`** - Version manager support
-
-### Language Support  
-- **`python`** - Python development utilities
-- **`pip`** - Python package manager enhancements
-- **`mix`** - Elixir build tool support
-- **`ruby`** - Ruby development utilities
-
-### Productivity Boosters
-- **`fzf`** - Fuzzy finder integration
-- **`z`** - Smart directory jumping
-- **`copypath`** - Copy current path to clipboard
-- **`copyfile`** - Copy file contents to clipboard  
-- **`extract`** - Extract any archive format
-- **`web-search`** - Search from terminal
-
-### System Integration
-- **`macos`** - macOS-specific enhancements
-- **`brew`** - Homebrew integration
-- **`vscode`** - VS Code integration
-
-### Enhanced Shell Experience
-- **`zsh-autosuggestions`** - Fish-like autosuggestions
-- **`zsh-syntax-highlighting`** - Real-time syntax highlighting
-
-## 📁 Enhanced Directory Listings
-
-The setup includes `colorls` with these aliases:
-- **`ls`** - Colorful directory listing (replaces standard ls)
-- **`lc`** - Long format with directories first
-- **`la`** - Show all files including hidden ones  
-- **`ll`** - Detailed long listing
-- **`tree`** - Tree view of directory structure
-
-## 🔄 Managing Your Dotfiles
-
-### Apply changes
-```bash
-# Preview what would change
-chezmoi diff
-
-# Apply all changes
-chezmoi apply
-```
-
-### Update configuration
-```bash
-# Edit a file and automatically update chezmoi
-chezmoi edit ~/.zshrc
-
-# Add a new file to chezmoi management
-chezmoi add ~/.newconfig
-```
-
-### Sync across machines
-```bash
-# Push changes to your dotfiles repository
-chezmoi git add .
-chezmoi git commit -m "Update configuration"
-chezmoi git push
-
-# Pull changes on another machine
-chezmoi update
-```
-
-## 📋 Requirements
-
-- **macOS** (tested on Apple Silicon and Intel Macs)
-- **Homebrew** (automatically installed if missing)
-- **Git** (for cloning repositories)
-- **Internet connection** (for downloading tools and themes)
-
-## 🗂 Project Structure
-
-```
-~/.local/share/chezmoi/
-├── README.md                           # This file
-├── docs/                               # Documentation
-│   ├── README_SETUP.md                 # Detailed setup guide
-│   └── ZSHRC_FIXES.md                  # Shell configuration fixes
-├── dot_zshrc                           # Oh My Zsh configuration
-├── dot_p10k.zsh                       # Powerlevel10k theme config
-├── dot_tool-versions                   # ASDF version specifications
-├── dot_config/                         # Application configurations
-│   └── doom/                           # Doom Emacs config
-├── run_once_setup_ohmyzsh.sh          # Oh My Zsh & plugins installer
-├── run_once_setup_asdf.sh             # ASDF version manager setup
-├── run_once_setup_emacs.sh            # Emacs and Doom setup
-├── run_once_setup_homebrew.sh         # Homebrew installer
-├── run_once_setup_iterm.sh            # iTerm2 setup
-└── install.sh                         # Legacy setup script
-```
-
-## 🛠 Troubleshooting
-
-### Shell plugins not working
-```bash
-# Reload shell configuration
-source ~/.zshrc
-
-# Or restart your terminal
-```
-
-### Missing Oh My Zsh plugins
-```bash
-# Re-run the Oh My Zsh setup
-~/.local/share/chezmoi/run_once_setup_ohmyzsh.sh
-```
-
-### Reset chezmoi state
-```bash
-# Clear script execution state and re-run setup scripts
-chezmoi state delete-bucket --bucket=scriptState
-chezmoi apply
-```
-
-### Check setup status
-```bash
-# See what chezmoi would change
-chezmoi status
-
-# See current plugin status
-echo $plugins
-```
-
-## 📚 Additional Documentation
-
-- **[Setup Guide](docs/README_SETUP.md)** - Detailed installation and configuration guide
-- **[Shell Fixes](docs/ZSHRC_FIXES.md)** - Documentation of shell configuration fixes
-
-## 🤝 Contributing
-
-Feel free to fork this repository and adapt it to your needs. The modular script approach makes it easy to add or remove components.
+This README is for me and for AI agents. Agents: read [Rules for AI agents](#rules-for-ai-agents) before changing anything.
 
 ---
 
-**Happy coding!** 🎉
+## What it sets up
+
+| Area | What | Where it is defined |
+|---|---|---|
+| Package manager | Homebrew | `run_once_01_setup_homebrew.sh` |
+| Language versions | asdf, with versions pinned in `~/.tool-versions` (chezmoi, ruby, nodejs, java, python) | `run_once_02_setup_asdf.sh`, `dot_tool-versions` |
+| Terminal | iTerm2 | `run_once_03_setup_iterm.sh` |
+| Shell | Oh My Zsh, zsh-autosuggestions, zsh-syntax-highlighting | `run_once_04_setup_ohmyzsh.sh`, `dot_zshrc` |
+| Prompt | Powerlevel10k | `run_once_07_setup_fonts.sh`, `dot_p10k.zsh` |
+| Fonts | MesloLGS Nerd Font, VictorMono Nerd Font | `run_once_07_setup_fonts.sh` |
+| Directory listings | colorls, with `ls`, `lc`, `la`, `ll` and `tree` aliases | `run_once_06_setup_colorls.sh`, `dot_zshrc`, `dot_config/colorls/` |
+| Secrets tooling | Keeper Commander (password manager CLI), OpenBao `bao` (work secrets CLI) | `run_once_08_setup_secrets_tools.sh` |
+| SSH | Example config only | `private_dot_ssh/private_config.example` |
+| chezmoi itself | Config: source dir, VS Code as editor, diff and merge tool | `.chezmoi.toml.tmpl` |
+
+### Files that are not managed
+
+| File | Purpose |
+|---|---|
+| `~/.zshrc.local` | Machine-specific and **work-only** shell settings (BAO_ADDR, CA bundle paths). Sourced at the end of `~/.zshrc`. Never committed, because this repo is public. |
+| `~/Workspace/.tool-versions` | Workspace-level pins (erlang, elixir, newer nodejs). |
+
+---
+
+## Install on a new Mac
+
+1. Install Homebrew and chezmoi. The Homebrew installer prompts interactively, so run it yourself:
+
+   ```zsh
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   ```
+
+   ```zsh
+   eval "$(/opt/homebrew/bin/brew shellenv)" && brew install chezmoi
+   ```
+
+2. Clone into the expected location and apply. `chezmoi init` renders `.chezmoi.toml.tmpl` into `~/.config/chezmoi/chezmoi.toml`, and `--apply` writes the dotfiles and runs every `run_once_*` script in order.
+
+   ```zsh
+   git clone https://github.com/romanmt/dotfiles.git ~/Workspace/dotfiles && chezmoi init --source ~/Workspace/dotfiles --apply
+   ```
+
+3. Create `~/.zshrc.local` with any work settings (copy it from the old machine; it is not in git).
+
+4. Open a new terminal, and set iTerm2's font to `MesloLGS NF`.
+
+5. Log in to the CLIs as needed: `keeper shell` for the password manager, and `bao login` for work.
+
+---
+
+## Day-to-day use
+
+| Task | Command |
+|---|---|
+| See what is out of sync | `chezmoi status` |
+| Preview changes in the terminal | `chezmoi diff --use-builtin-diff` (plain `chezmoi diff` opens VS Code) |
+| Apply everything | `chezmoi apply` |
+| Apply one file | `chezmoi apply ~/.zshrc` |
+| Edit a managed file | `chezmoi edit ~/.zshrc`, then `chezmoi apply` |
+| Pull a change you made in `$HOME` back into the repo | `chezmoi re-add ~/.p10k.zsh` |
+| Start managing a new file | `chezmoi add ~/.config/foo/config` |
+| Commit and push | `cd ~/Workspace/dotfiles && git add -A && git commit && git push` |
+| Pull from another machine | `chezmoi update` |
+| Re-run every setup script | `chezmoi state delete-bucket --bucket=scriptState && chezmoi apply` |
+
+`run_once_*` scripts run again automatically whenever their **contents** change, so editing a script is enough to get it run on the next apply.
+
+---
+
+## Rules for AI agents
+
+These rules apply to any agent (Claude Code or another) that changes this repo or the setup it manages. My global `~/.claude/CLAUDE.md` rules also apply; where the two differ, the stricter one wins.
+
+### How the repo works
+
+- **This repo is the source of truth.** A file in `$HOME` is generated from its source here: `~/.zshrc` comes from `dot_zshrc`, `~/.config/x` from `dot_config/x`, `~/.ssh/config` from `private_dot_ssh/private_config`.
+- **Change the source, not the target.** Edit the file in `~/Workspace/dotfiles`, then apply it. If you have to change a file in `$HOME` directly, bring it back with `chezmoi re-add <path>` in the same session.
+- **Setup scripts install things. They never edit managed files.** A `run_once_*` script must not append to `~/.zshrc` (or any other managed file), and must not call `chezmoi add`. Shell config goes in `dot_zshrc`. Breaking this rule is what duplicated the colorls and asdf blocks before.
+- **Scripts are self-contained and idempotent.** chezmoi runs each one on its own, so define any helper inside the script that uses it. Check before installing, and exit non-zero with a clear message on failure.
+- **Scripts run in filename order.** Use the next free two-digit prefix (`run_once_09_...`) and put dependencies first. Homebrew (01) comes before anything that uses `brew`, asdf (02) before anything that needs ruby or node, and Oh My Zsh (04) before the plugins or themes that rely on it.
+- **Versions live only in `dot_tool-versions`.** Do not hard-code versions in scripts. `run_once_02` installs whatever that file pins.
+- **Repo-only files go in `.chezmoiignore`.** This README, `CLAUDE.md` and `docs/` are listed there so they are never copied into `$HOME`. Add any new repo-only file to it.
+
+### Shell startup must stay silent
+
+Powerlevel10k's instant prompt prints a large warning if anything writes to the terminal during startup. In `dot_zshrc`:
+
+- Nothing may `echo` or print. Commands that might fail must send their errors to `/dev/null`.
+- Guard optional tools: `[[ -f file ]] && source file`, `command -v tool &> /dev/null`.
+- Keep startup fast. Avoid running `$(slow-command)` on every shell when a file can be sourced instead.
+
+### Public repo: secrets and work details
+
+- **No secrets, ever.** No tokens, passwords or keys in any file, not even in examples or comments. Keeper is my personal password manager and OpenBao is the work secrets manager, and **neither is wired into chezmoi templates**. Do not add `keeper`, `bao` or `vault` template functions.
+- **No work-internal details.** Internal hostnames (`*.kwi.com`), internal paths, IPs and work env vars go in `~/.zshrc.local`, not in this repo.
+
+### Making a change
+
+1. Read the files you are about to change and run `chezmoi status`. A file marked `MM` has drifted, meaning the live copy differs from the source. **Treat the live copy as newer** and bring it back with `chezmoi re-add` before editing, or you will undo my changes.
+2. Make the edit in the repo.
+3. Validate without asking (these are read-only):
+   - `zsh -n dot_zshrc` and `zsh -n run_once_*.sh`
+   - `chezmoi execute-template < .chezmoi.toml.tmpl` after editing that template
+   - `chezmoi diff --use-builtin-diff <target>`
+   - A startup test that leaves `~/.zshrc` alone: copy `dot_zshrc` to `<scratch>/.zshrc`, then run `ZDOTDIR=<scratch> zsh -i -c exit` and check that it prints nothing.
+4. **Ask before** running `chezmoi apply`, deleting tracked files, or changing anything outside the repo (`$HOME`, `/Applications`, `/opt/homebrew`). Show the exact command.
+5. Update this README when you add, remove or rename a component, a script or a rule.
+6. Commit only when I ask, with a message that describes the change. Push only when I ask.
+
+### Style
+
+- No em dashes or en dashes in anything I read: commit messages, comments, docs.
+- No `#` comments inside shell commands handed to me to paste (zsh does not treat them as comments). Comments inside script files are fine.
+- Match the existing script style: `#!/bin/zsh`, an inline `check_command_installed`, and emoji status lines.
+
+---
+
+## Troubleshooting
+
+**"Insecure completion-dependent directories" on every new terminal.** compaudit rejects completion files that are not owned by you or root. For OrbStack (installed by the laptop's previous owner):
+
+```zsh
+sudo chown -R "$USER":staff /Applications/OrbStack.app
+```
+
+To find other offenders, run `compaudit`.
+
+**Powerlevel10k "console output during zsh initialization" warning.** Something in `~/.zshrc` or `~/.zshrc.local` printed during startup. The warning lists the output at the bottom. Fix the source as described in [Shell startup must stay silent](#shell-startup-must-stay-silent).
+
+**chezmoi uses the wrong source directory.** `chezmoi source-path` should print `~/Workspace/dotfiles`. If it does not, `sourceDir` in `~/.config/chezmoi/chezmoi.toml` is missing or sits under a `[section]` header (TOML top-level keys must come before the first section). Regenerate it with `chezmoi init`.
+
+**"config file template has changed".** Run `chezmoi init` to regenerate `~/.config/chezmoi/chezmoi.toml` from `.chezmoi.toml.tmpl`.
+
+**A setup script did not run.** Run `chezmoi apply --dry-run --verbose` to see what would run. To force all of them, use `chezmoi state delete-bucket --bucket=scriptState`.
